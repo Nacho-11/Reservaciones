@@ -417,6 +417,32 @@
     }
   }
 
+  // 🔒 Fechas bloqueadas por local
+  const fechasBloqueadas = {
+    "Alajuela Centro": [],
+    "Bar Heredia": [],
+    "Bar San Joaquin": [],
+    "Barrio San Jose": [],
+    "Pirro": [],
+    "Sabana": [],
+    "San Joaquin": [],
+    "San Pedro": ["2026-02-14"],
+    "Universidad Nacional": []
+  };
+
+  // 🚫 Validar fechas bloqueadas según el local
+  document.getElementById('date').addEventListener('change', function () {
+    const fechaSeleccionada = this.value;
+    const local = localSeleccionado;
+
+    if (!local) return;
+
+    if (fechasBloqueadas[local]?.includes(fechaSeleccionada)) {
+      alert("❌ Esta fecha no está disponible para este local. Por favor elige otra.");
+      this.value = "";
+    }
+  });
+
   // Proceder al formulario después de seleccionar local
   function proceedToForm() {
     const select = document.getElementById('local-select');
