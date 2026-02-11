@@ -10,13 +10,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 
   <style>
-    /* Variables CSS con colores morados y efecto neon */
+    /* Variables CSS - Por defecto morado para Los Años Locos */
     :root {
-      --neon-purple: #9d4edd;
-      --neon-purple-light: #c77dff;
-      --neon-purple-dark: #7b2cbf;
-      --neon-blue: #4361ee;
-      --neon-pink: #f72585;
+      --neon-primary: #9d4edd;
+      --neon-primary-light: #c77dff;
+      --neon-primary-dark: #7b2cbf;
+      --neon-secondary: #4361ee;
+      --neon-glow-color: #c77dff;
       --primary: #9d4edd;
       --primary-dark: #7b2cbf;
       --primary-light: #c77dff;
@@ -34,16 +34,33 @@
       --light-muted: #888888;
       --border: #333333;
       --border-light: #444444;
-      --neon-glow: 0 0 10px var(--neon-purple-light), 
-                   0 0 20px var(--neon-purple-light), 
-                   0 0 30px var(--neon-purple-light);
-      --neon-glow-soft: 0 0 5px var(--neon-purple-light),
-                        0 0 10px var(--neon-purple-light);
+      --neon-glow: 0 0 10px var(--neon-primary-light), 
+                   0 0 20px var(--neon-primary-light), 
+                   0 0 30px var(--neon-primary-light);
+      --neon-glow-soft: 0 0 5px var(--neon-primary-light),
+                        0 0 10px var(--neon-primary-light);
       --shadow: 0 4px 12px rgba(157, 78, 221, 0.2);
       --shadow-hover: 0 8px 20px rgba(157, 78, 221, 0.3);
       --transition: all 0.3s ease;
       --radius: 12px;
       --radius-sm: 8px;
+    }
+
+    /* Variables para tema Parrillita (amarillo) */
+    .theme-parrillita {
+      --neon-primary: #ffd700;
+      --neon-primary-light: #ffe44d;
+      --neon-primary-dark: #e6c300;
+      --neon-glow-color: #ffd700;
+      --primary: #ffd700;
+      --primary-dark: #e6c300;
+      --primary-light: #ffe44d;
+      --secondary: #b8860b;
+      --secondary-dark: #8b6914;
+      --neon-glow: 0 0 10px #ffd700, 0 0 20px #ffe44d, 0 0 30px #ffd700;
+      --neon-glow-soft: 0 0 5px #ffd700, 0 0 10px #ffe44d;
+      --shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
+      --shadow-hover: 0 8px 20px rgba(255, 215, 0, 0.3);
     }
 
     /* Reset y estilos base */
@@ -63,16 +80,24 @@
       line-height: 1.6;
       position: relative;
       overflow-x: hidden;
+      transition: var(--transition);
     }
 
-    /* Logos de fondo */
+    /* Logos de fondo - MÁS GRANDES */
     .logo-fondo {
       position: fixed;
-      width: 380px;
-      opacity: 0.05; /* Muy tenue */
-      filter: blur(1px);
+      width: 600px; /* Aumentado de 380px a 600px */
+      opacity: 0.08; /* Ligeramente más visible */
+      filter: blur(1.5px);
       z-index: 0;
-      pointer-events: none; /* No bloquea clicks */
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    /* Versión del logo para cuando está activo (más visible) */
+    .logo-fondo.activo {
+      opacity: 0.15;
+      filter: blur(1px);
     }
 
     /* Lado izquierdo */
@@ -89,7 +114,22 @@
       transform: translateY(-50%);
     }
 
+    /* Hacer que el logo de Los Años Locos sea más blanco */
+    .logo-fondo.derecha {
+      filter: brightness(1.2) contrast(1.1) blur(1.5px); /* Más brillante y blanco */
+    }
+
+    .logo-fondo.derecha.activo {
+      filter: brightness(1.4) contrast(1.2) blur(1px); /* Aún más brillante cuando está activo */
+    }
+
     /* Ocultar en pantallas pequeñas */
+    @media (max-width: 1400px) {
+      .logo-fondo {
+        width: 450px; /* Aún grande pero más pequeño que en desktop */
+      }
+    }
+
     @media (max-width: 1200px) {
       .logo-fondo {
         display: none;
@@ -105,27 +145,27 @@
       min-height: 100vh;
       background: rgba(10, 10, 10, 0.85);
       border: 2px solid transparent;
-      border-image: linear-gradient(45deg, var(--neon-purple), var(--neon-blue), var(--neon-pink), var(--neon-purple));
+      border-image: linear-gradient(45deg, var(--neon-primary), var(--neon-secondary), var(--neon-pink, #f72585), var(--neon-primary));
       border-image-slice: 1;
       animation: borderGlow 3s infinite alternate;
       box-shadow: var(--neon-glow-soft);
       backdrop-filter: blur(5px);
-      z-index: 1; /* Asegura que el contenido esté sobre los logos */
+      z-index: 1;
+      transition: all 0.5s ease;
     }
 
     @keyframes borderGlow {
       0% {
         box-shadow: var(--neon-glow-soft);
-        border-image-source: linear-gradient(45deg, var(--neon-purple), var(--neon-blue), var(--neon-pink), var(--neon-purple));
+        border-image-source: linear-gradient(45deg, var(--neon-primary), var(--neon-secondary), var(--neon-pink, #f72585), var(--neon-primary));
       }
       100% {
-        box-shadow: 0 0 15px var(--neon-purple-light),
-                    0 0 25px var(--neon-purple-light);
-        border-image-source: linear-gradient(45deg, var(--neon-pink), var(--neon-purple), var(--neon-blue), var(--neon-pink));
+        box-shadow: 0 0 15px var(--neon-primary-light),
+                    0 0 25px var(--neon-primary-light);
+        border-image-source: linear-gradient(45deg, var(--neon-pink, #f72585), var(--neon-primary), var(--neon-secondary), var(--neon-pink, #f72585));
       }
     }
 
-    /* El resto de tu CSS permanece igual... */
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -142,7 +182,7 @@
       margin-bottom: 20px;
       font-size: 32px;
       font-weight: 800;
-      background: linear-gradient(45deg, var(--neon-purple), var(--neon-purple-light), var(--neon-blue));
+      background: linear-gradient(45deg, var(--neon-primary), var(--neon-primary-light), var(--neon-secondary));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -151,6 +191,7 @@
       text-shadow: 0 0 10px rgba(157, 78, 221, 0.3);
       position: relative;
       padding: 10px 0;
+      transition: all 0.5s ease;
     }
 
     h1::after {
@@ -161,9 +202,10 @@
       transform: translateX(-50%);
       width: 100px;
       height: 3px;
-      background: linear-gradient(90deg, transparent, var(--neon-purple-light), transparent);
+      background: linear-gradient(90deg, transparent, var(--neon-primary-light), transparent);
       border-radius: 2px;
-      box-shadow: 0 0 10px var(--neon-purple-light);
+      box-shadow: 0 0 10px var(--neon-primary-light);
+      transition: all 0.5s ease;
     }
 
     p {
@@ -196,14 +238,14 @@
       outline: none;
       text-transform: uppercase;
       background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: white;
-      border: 2px solid var(--neon-purple);
+      color: var(--dark);
+      border: 2px solid var(--neon-primary);
     }
 
     .btn:hover {
       transform: translateY(-3px);
-      box-shadow: var(--shadow-hover), 0 0 15px var(--neon-purple-light);
-      border-color: var(--neon-purple-light);
+      box-shadow: var(--shadow-hover), 0 0 15px var(--neon-primary-light);
+      border-color: var(--neon-primary-light);
     }
 
     .btn:active {
@@ -227,15 +269,15 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-purple-dark) 100%);
-      color: white;
-      border: 2px solid var(--neon-purple);
+      background: linear-gradient(135deg, var(--neon-primary) 0%, var(--neon-primary-dark) 100%);
+      color: var(--dark);
+      border: 2px solid var(--neon-primary);
       text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
     }
 
     .btn-primary:hover {
-      background: linear-gradient(135deg, var(--neon-purple-light) 0%, var(--neon-purple) 100%);
-      box-shadow: 0 8px 25px rgba(157, 78, 221, 0.4), 0 0 20px var(--neon-purple-light);
+      background: linear-gradient(135deg, var(--neon-primary-light) 0%, var(--neon-primary) 100%);
+      box-shadow: 0 8px 25px rgba(157, 78, 221, 0.4), 0 0 20px var(--neon-primary-light);
     }
 
     .btn-secondary {
@@ -266,13 +308,13 @@
 
     @keyframes neonPulse {
       0% {
-        box-shadow: 0 0 5px var(--neon-purple-light);
+        box-shadow: 0 0 5px var(--neon-primary-light);
       }
       50% {
-        box-shadow: 0 0 20px var(--neon-purple-light), 0 0 30px var(--neon-purple-light);
+        box-shadow: 0 0 20px var(--neon-primary-light), 0 0 30px var(--neon-primary-light);
       }
       100% {
-        box-shadow: 0 0 5px var(--neon-purple-light);
+        box-shadow: 0 0 5px var(--neon-primary-light);
       }
     }
 
@@ -305,12 +347,13 @@
       height: 2px;
       background: linear-gradient(90deg, 
         transparent, 
-        var(--neon-purple), 
-        var(--neon-purple-light), 
-        var(--neon-purple), 
+        var(--neon-primary), 
+        var(--neon-primary-light), 
+        var(--neon-primary), 
         transparent);
       z-index: 1;
-      box-shadow: 0 0 5px var(--neon-purple-light);
+      box-shadow: 0 0 5px var(--neon-primary-light);
+      transition: all 0.5s ease;
     }
 
     .step {
@@ -332,9 +375,9 @@
     }
 
     .step.active {
-      background: linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-purple-dark) 100%);
-      border-color: var(--neon-purple-light);
-      color: white;
+      background: linear-gradient(135deg, var(--neon-primary) 0%, var(--neon-primary-dark) 100%);
+      border-color: var(--neon-primary-light);
+      color: var(--dark);
       box-shadow: var(--neon-glow-soft);
       transform: scale(1.1);
       animation: stepGlow 2s infinite alternate;
@@ -342,10 +385,10 @@
 
     @keyframes stepGlow {
       0% {
-        box-shadow: 0 0 5px var(--neon-purple-light);
+        box-shadow: 0 0 5px var(--neon-primary-light);
       }
       100% {
-        box-shadow: 0 0 15px var(--neon-purple-light), 0 0 25px var(--neon-purple-light);
+        box-shadow: 0 0 15px var(--neon-primary-light), 0 0 25px var(--neon-primary-light);
       }
     }
 
@@ -365,10 +408,11 @@
     label {
       display: block;
       margin-bottom: 12px;
-      color: var(--neon-purple-light);
+      color: var(--neon-primary-light);
       font-weight: 600;
       font-size: 16px;
       text-shadow: 0 0 3px rgba(199, 125, 255, 0.3);
+      transition: all 0.5s ease;
     }
 
     input, select {
@@ -386,8 +430,8 @@
 
     input:focus, select:focus {
       outline: none;
-      border-color: var(--neon-purple-light);
-      box-shadow: 0 0 0 3px rgba(157, 78, 221, 0.3), 0 0 10px var(--neon-purple-light);
+      border-color: var(--neon-primary-light);
+      box-shadow: 0 0 0 3px rgba(157, 78, 221, 0.3), 0 0 10px var(--neon-primary-light);
       background: rgba(50, 50, 50, 0.9);
     }
 
@@ -409,12 +453,12 @@
     }
 
     select:hover {
-      border-color: var(--neon-purple);
+      border-color: var(--neon-primary);
     }
 
     .reminder {
       background: linear-gradient(135deg, rgba(45, 45, 45, 0.8) 0%, rgba(37, 37, 37, 0.9) 100%);
-      border-left: 5px solid var(--neon-purple);
+      border-left: 5px solid var(--neon-primary);
       padding: 20px;
       margin: 25px 0;
       border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
@@ -423,6 +467,7 @@
       animation: fadeInUp 0.5s ease-out;
       backdrop-filter: blur(5px);
       box-shadow: 0 0 10px rgba(157, 78, 221, 0.1);
+      transition: all 0.5s ease;
     }
 
     .reminder::before {
@@ -438,12 +483,13 @@
 
     .reminder h3 {
       margin-top: 0;
-      color: var(--neon-purple-light);
+      color: var(--neon-primary-light);
       font-size: 18px;
       display: flex;
       align-items: center;
       gap: 10px;
       text-shadow: 0 0 5px rgba(199, 125, 255, 0.3);
+      transition: all 0.5s ease;
     }
 
     .reminder p {
@@ -458,10 +504,11 @@
       border-radius: var(--radius);
       padding: 25px;
       margin: 25px 0;
-      border: 1px solid var(--neon-purple);
+      border: 1px solid var(--neon-primary);
       box-shadow: var(--shadow), 0 0 10px rgba(157, 78, 221, 0.2);
       animation: fadeInUp 0.5s ease-out;
       backdrop-filter: blur(5px);
+      transition: all 0.5s ease;
     }
 
     .summary-item {
@@ -480,10 +527,11 @@
     }
 
     .summary-label {
-      color: var(--neon-purple-light);
+      color: var(--neon-primary-light);
       font-weight: 500;
       font-size: 15px;
       text-shadow: 0 0 3px rgba(199, 125, 255, 0.2);
+      transition: all 0.5s ease;
     }
 
     .summary-value {
@@ -500,12 +548,13 @@
       border-radius: var(--radius);
       padding: 25px;
       margin: 25px 0;
-      border: 1px solid var(--neon-purple);
+      border: 1px solid var(--neon-primary);
       position: relative;
       overflow: hidden;
       animation: fadeInUp 0.5s ease-out;
       backdrop-filter: blur(5px);
       box-shadow: 0 0 15px rgba(157, 78, 221, 0.2);
+      transition: all 0.5s ease;
     }
 
     .pdf-preview::before {
@@ -516,11 +565,11 @@
       font-size: 40px;
       opacity: 0.1;
       transform: rotate(15deg);
-      color: var(--neon-purple-light);
+      color: var(--neon-primary-light);
     }
 
     .pdf-preview h3 {
-      color: var(--neon-purple-light);
+      color: var(--neon-primary-light);
       margin-top: 0;
       text-align: center;
       font-size: 20px;
@@ -529,6 +578,7 @@
       justify-content: center;
       gap: 10px;
       text-shadow: 0 0 5px rgba(199, 125, 255, 0.3);
+      transition: all 0.5s ease;
     }
 
     .pdf-info {
@@ -562,7 +612,7 @@
 
     .spinner {
       border: 4px solid rgba(255, 255, 255, 0.1);
-      border-left-color: var(--neon-purple-light);
+      border-left-color: var(--neon-primary-light);
       border-radius: 50%;
       width: 60px;
       height: 60px;
@@ -576,7 +626,7 @@
     }
 
     .loading h3 {
-      color: var(--neon-purple-light);
+      color: var(--neon-primary-light);
       margin-bottom: 15px;
       font-size: 22px;
       text-shadow: 0 0 5px rgba(199, 125, 255, 0.3);
@@ -593,10 +643,11 @@
       color: var(--light-muted);
       margin-top: 50px;
       padding-top: 20px;
-      border-top: 1px solid var(--neon-purple);
+      border-top: 1px solid var(--neon-primary);
       line-height: 1.5;
       animation: fadeInUp 0.5s ease-out;
       position: relative;
+      transition: all 0.5s ease;
     }
 
     footer::before {
@@ -607,9 +658,10 @@
       transform: translateX(-50%);
       width: 100px;
       height: 2px;
-      background: linear-gradient(90deg, transparent, var(--neon-purple-light), transparent);
+      background: linear-gradient(90deg, transparent, var(--neon-primary-light), transparent);
       border-radius: 1px;
-      box-shadow: 0 0 5px var(--neon-purple-light);
+      box-shadow: 0 0 5px var(--neon-primary-light);
+      transition: all 0.5s ease;
     }
 
     .btn-icon {
@@ -622,25 +674,26 @@
     }
 
     #local-selected {
-      color: var(--neon-purple-light);
+      color: var(--neon-primary-light);
       font-weight: 700;
-      text-shadow: 0 0 10px var(--neon-purple-light);
+      text-shadow: 0 0 10px var(--neon-primary-light);
       animation: textGlow 2s infinite alternate;
       display: inline-block;
       padding: 5px 10px;
       background: rgba(157, 78, 221, 0.1);
       border-radius: 5px;
-      border: 1px solid var(--neon-purple);
+      border: 1px solid var(--neon-primary);
+      transition: all 0.5s ease;
     }
 
     @keyframes textGlow {
       0% {
-        text-shadow: 0 0 5px var(--neon-purple-light);
-        box-shadow: 0 0 5px var(--neon-purple-light);
+        text-shadow: 0 0 5px var(--neon-primary-light);
+        box-shadow: 0 0 5px var(--neon-primary-light);
       }
       100% {
-        text-shadow: 0 0 15px var(--neon-purple-light), 0 0 25px var(--neon-purple-light);
-        box-shadow: 0 0 10px var(--neon-purple-light);
+        text-shadow: 0 0 15px var(--neon-primary-light), 0 0 25px var(--neon-primary-light);
+        box-shadow: 0 0 10px var(--neon-primary-light);
       }
     }
 
@@ -653,14 +706,14 @@
     }
 
     ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--neon-purple), var(--neon-purple-dark));
+      background: linear-gradient(180deg, var(--neon-primary), var(--neon-primary-dark));
       border-radius: 5px;
-      box-shadow: 0 0 5px var(--neon-purple-light);
+      box-shadow: 0 0 5px var(--neon-primary-light);
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(180deg, var(--neon-purple-light), var(--neon-purple));
-      box-shadow: 0 0 10px var(--neon-purple-light);
+      background: linear-gradient(180deg, var(--neon-primary-light), var(--neon-primary));
+      box-shadow: 0 0 10px var(--neon-primary-light);
     }
 
     @media (max-width: 480px) {
@@ -697,9 +750,9 @@
 </head>
 <body>
 
-  <!-- LOGOS DE FONDO -->
-  <img src="img/logo Parrillita.png" alt="Logo izquierdo" class="logo-fondo izquierda">
-  <img src="img/Logo Los Años Locos.png" alt="Logo derecho" class="logo-fondo derecha">
+  <!-- LOGOS DE FONDO - MÁS GRANDES -->
+  <img src="img/logo Parrillita.png" alt="Logo Parrillita" class="logo-fondo izquierda" id="logo-parrillita">
+  <img src="img/Logo Los Años Locos.png" alt="Logo Los Años Locos" class="logo-fondo derecha" id="logo-anoslocos">
 
   <div class="container">
 
@@ -890,11 +943,40 @@
     let pdfBlob = null;
     let pdfFileName = '';
 
+    // Función para cambiar el tema según el local seleccionado
+    function cambiarTemaPorLocal(local) {
+      const body = document.body;
+      const logoParrillita = document.getElementById('logo-parrillita');
+      const logoAnosLocos = document.getElementById('logo-anoslocos');
+      
+      // Remover clase de tema anterior
+      body.classList.remove('theme-parrillita');
+      
+      // Resetear opacidad de logos
+      logoParrillita.classList.remove('activo');
+      logoAnosLocos.classList.remove('activo');
+      
+      if (local && local.toLowerCase().includes('parrillita')) {
+        // Activar tema Parrillita (amarillo)
+        body.classList.add('theme-parrillita');
+        logoParrillita.classList.add('activo');
+      } else if (local && local.toLowerCase().includes('años locos')) {
+        // Tema Los Años Locos (morado - por defecto)
+        logoAnosLocos.classList.add('activo');
+      }
+    }
+
     // Paso 1: Seleccionar tipo de reserva
     function selectTipo(tipo) {
       tipoSeleccionado = tipo;
       document.getElementById('step1').classList.add('hidden');
       document.getElementById('step2').classList.remove('hidden');
+      
+      // Por defecto al inicio, mostrar ambos logos con opacidad base
+      const logoParrillita = document.getElementById('logo-parrillita');
+      const logoAnosLocos = document.getElementById('logo-anoslocos');
+      logoParrillita.classList.remove('activo');
+      logoAnosLocos.classList.remove('activo');
     }
 
     // Actualizar información del local seleccionado
@@ -905,9 +987,18 @@
       if (select.value) {
         continueBtn.disabled = false;
         continueBtn.classList.remove('disabled');
+        
+        // Cambiar tema según el local seleccionado
+        cambiarTemaPorLocal(select.value);
       } else {
         continueBtn.disabled = true;
         continueBtn.classList.add('disabled');
+        
+        // Si no hay local seleccionado, resetear opacidad
+        const logoParrillita = document.getElementById('logo-parrillita');
+        const logoAnosLocos = document.getElementById('logo-anoslocos');
+        logoParrillita.classList.remove('activo');
+        logoAnosLocos.classList.remove('activo');
       }
     }
 
@@ -968,6 +1059,12 @@
     function backToStep2() {
       document.getElementById('step3').classList.add('hidden');
       document.getElementById('step2').classList.remove('hidden');
+      
+      // Al volver, mantener el tema según el local seleccionado
+      const select = document.getElementById('local-select');
+      if (select.value) {
+        cambiarTemaPorLocal(select.value);
+      }
     }
 
     // Paso 2: Volver al paso 1
@@ -979,6 +1076,14 @@
       
       document.getElementById('step2').classList.add('hidden');
       document.getElementById('step1').classList.remove('hidden');
+      
+      // Resetear tema a estado neutral
+      const body = document.body;
+      body.classList.remove('theme-parrillita');
+      const logoParrillita = document.getElementById('logo-parrillita');
+      const logoAnosLocos = document.getElementById('logo-anoslocos');
+      logoParrillita.classList.remove('activo');
+      logoAnosLocos.classList.remove('activo');
     }
 
     // Paso 4: Volver al paso 3
@@ -1031,18 +1136,22 @@
       const telefonoLimpio = reservationData.telefono.replace(/\s+/g, '');
       pdfFileName = `${nombreSinEspacios}_${telefonoLimpio}.pdf`;
       
-      // Configurar el documento
+      // Configurar el documento - Usar colores según el tema
+      const esParrillita = localSeleccionado && localSeleccionado.toLowerCase().includes('parrillita');
+      const colorPrimario = esParrillita ? [255, 215, 0] : [157, 78, 221]; // Amarillo o Morado
+      const colorPrimarioLight = esParrillita ? [255, 228, 77] : [199, 125, 255];
+      
       doc.setFontSize(20);
-      doc.setTextColor(157, 78, 221); // Morado neon
+      doc.setTextColor(colorPrimario[0], colorPrimario[1], colorPrimario[2]);
       doc.text('CONFIRMACIÓN DE RESERVA', 105, 20, { align: 'center' });
       
       // Logo/Encabezado
       doc.setFontSize(12);
-      doc.setTextColor(199, 125, 255); // Morado claro
+      doc.setTextColor(colorPrimarioLight[0], colorPrimarioLight[1], colorPrimarioLight[2]);
       doc.text('La Parrillita de Pepe', 105, 30, { align: 'center' });
       
       // Línea separadora
-      doc.setDrawColor(157, 78, 221);
+      doc.setDrawColor(colorPrimario[0], colorPrimario[1], colorPrimario[2]);
       doc.setLineWidth(0.5);
       doc.line(20, 35, 190, 35);
       
@@ -1065,7 +1174,7 @@
         ['Local', reservationData.local],
         ['Fecha', fechaFormateada],
         ['Hora', reservationData.hora],
-        ['Número de Personas', reservationData.personas],
+        ['Número de Personas', reservationData.personas + (reservationData.personas === '11' ? ' (Más de 10)' : '')],
         ['Nombre', reservationData.nombre],
         ['Teléfono', reservationData.telefono],
         ['Fecha de Creación', reservationData.fechaCreacion],
@@ -1078,7 +1187,7 @@
         head: [['Detalle', 'Información']],
         body: tableData,
         theme: 'grid',
-        headStyles: { fillColor: [157, 78, 221], textColor: [255, 255, 255] },
+        headStyles: { fillColor: [colorPrimario[0], colorPrimario[1], colorPrimario[2]], textColor: esParrillita ? [0, 0, 0] : [255, 255, 255] },
         styles: { fontSize: 10, cellPadding: 5 },
         columnStyles: { 
           0: { fontStyle: 'bold', cellWidth: 70 },
@@ -1092,7 +1201,7 @@
       
       // Recordatorio importante
       doc.setFontSize(10);
-      doc.setTextColor(157, 78, 221);
+      doc.setTextColor(colorPrimario[0], colorPrimario[1], colorPrimario[2]);
       doc.setFont(undefined, 'bold');
       doc.text('⚠️ RECORDATORIO IMPORTANTE', 20, finalY);
       
@@ -1135,26 +1244,30 @@
     // Mostrar vista previa del PDF
     function showPDFPreview() {
       const previewDiv = document.getElementById('pdf-preview-content');
+      const esParrillita = reservationData.local && reservationData.local.toLowerCase().includes('parrillita');
+      const colorBorde = esParrillita ? '#ffd700' : '#9d4edd';
+      const colorTexto = esParrillita ? '#ffd700' : '#9d4edd';
+      const colorFondo = esParrillita ? '#fff9e6' : '#f8f0ff';
       
       previewDiv.innerHTML = `
-        <div style="background: white; color: black; padding: 15px; border-radius: 5px; font-family: Arial, sans-serif; border: 2px solid #9d4edd; box-shadow: 0 0 10px #c77dff;">
-          <h4 style="color: #9d4edd; margin-top: 0; text-align: center; font-weight: bold;">CONFIRMACIÓN DE RESERVA</h4>
-          <p style="color: #c77dff; text-align: center; font-weight: bold; text-shadow: 0 0 5px rgba(199, 125, 255, 0.3);">La Parrillita de Pepe</p>
-          <hr style="border-color: #9d4edd; box-shadow: 0 0 5px #9d4edd;">
+        <div style="background: white; color: black; padding: 15px; border-radius: 5px; font-family: Arial, sans-serif; border: 2px solid ${colorBorde}; box-shadow: 0 0 10px ${colorBorde};">
+          <h4 style="color: ${colorTexto}; margin-top: 0; text-align: center; font-weight: bold;">CONFIRMACIÓN DE RESERVA</h4>
+          <p style="color: ${colorTexto}; text-align: center; font-weight: bold; text-shadow: 0 0 5px ${colorBorde}50;">La Parrillita de Pepe</p>
+          <hr style="border-color: ${colorBorde}; box-shadow: 0 0 5px ${colorBorde};">
           
           <div style="margin-top: 15px;">
             <p><strong>Tipo de Reserva:</strong> ${reservationData.tipo}</p>
             <p><strong>Local:</strong> ${reservationData.local}</p>
             <p><strong>Fecha:</strong> ${reservationData.fecha}</p>
             <p><strong>Hora:</strong> ${reservationData.hora}</p>
-            <p><strong>Personas:</strong> ${reservationData.personas}</p>
+            <p><strong>Personas:</strong> ${reservationData.personas}${reservationData.personas === '11' ? ' (Más de 10)' : ''}</p>
             <p><strong>Nombre:</strong> ${reservationData.nombre}</p>
             <p><strong>Teléfono:</strong> ${reservationData.telefono}</p>
           </div>
           
-          <div style="background: #f8f0ff; padding: 10px; border-left: 3px solid #9d4edd; margin-top: 15px; border-radius: 3px;">
+          <div style="background: ${colorFondo}; padding: 10px; border-left: 3px solid ${colorBorde}; margin-top: 15px; border-radius: 3px;">
             <p style="margin: 0; font-size: 12px;">
-              <strong style="color: #9d4edd;">⚠️ Recordatorio:</strong> Después de la hora acordada cuenta con 5 minutos de gracia, de no estar se procederá a eliminar la reserva.
+              <strong style="color: ${colorTexto};">⚠️ Recordatorio:</strong> Después de la hora acordada cuenta con 5 minutos de gracia, de no estar se procederá a eliminar la reserva.
             </p>
           </div>
           
@@ -1189,7 +1302,7 @@
         </div>
         <div class="summary-item">
           <span class="summary-label">Personas:</span>
-          <span class="summary-value">${reservationData.personas}</span>
+          <span class="summary-value">${reservationData.personas}${reservationData.personas === '11' ? ' (Más de 10)' : ''}</span>
         </div>
         <div class="summary-item">
           <span class="summary-label">Nombre:</span>
@@ -1205,7 +1318,7 @@
         return;
       }
       
-      const mensajeInicial = `🥩 *LA PARRILLITA DE PEPE* 🔥\n\n*RESERVA CONFIRMADA*\n\n📋 *Resumen de Reserva:*\n📍 *Local:* ${reservationData.local}\n📅 *Fecha:* ${reservationData.fecha}\n⏰ *Hora:* ${reservationData.hora}\n👥 *Personas:* ${reservationData.personas}\n👤 *Nombre:* ${reservationData.nombre}\n\nPor favor, confirma mi reserva. Adjunto el comprobante PDF.`;
+      const mensajeInicial = `🥩 *LA PARRILLITA DE PEPE* 🔥\n\n*RESERVA CONFIRMADA*\n\n📋 *Resumen de Reserva:*\n📍 *Local:* ${reservationData.local}\n📅 *Fecha:* ${reservationData.fecha}\n⏰ *Hora:* ${reservationData.hora}\n👥 *Personas:* ${reservationData.personas}${reservationData.personas === '11' ? ' (Más de 10)' : ''}\n👤 *Nombre:* ${reservationData.nombre}\n\nPor favor, confirma mi reserva. Adjunto el comprobante PDF.`;
       
       const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeInicial)}`;
       
@@ -1238,6 +1351,12 @@
       if (document.getElementById('date')) {
         document.getElementById('date').setAttribute('min', today);
       }
+      
+      // Inicializar logos sin activo
+      const logoParrillita = document.getElementById('logo-parrillita');
+      const logoAnosLocos = document.getElementById('logo-anoslocos');
+      logoParrillita.classList.remove('activo');
+      logoAnosLocos.classList.remove('activo');
     });
   </script>
 
