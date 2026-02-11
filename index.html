@@ -65,6 +65,37 @@
       overflow-x: hidden;
     }
 
+    /* Logos de fondo */
+    .logo-fondo {
+      position: fixed;
+      width: 380px;
+      opacity: 0.05; /* Muy tenue */
+      filter: blur(1px);
+      z-index: 0;
+      pointer-events: none; /* No bloquea clicks */
+    }
+
+    /* Lado izquierdo */
+    .izquierda {
+      left: 60px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    /* Lado derecho */
+    .derecha {
+      right: 60px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    /* Ocultar en pantallas pequeñas */
+    @media (max-width: 1200px) {
+      .logo-fondo {
+        display: none;
+      }
+    }
+
     /* Contenedor principal con borde neon */
     .container {
       max-width: 480px;
@@ -79,6 +110,7 @@
       animation: borderGlow 3s infinite alternate;
       box-shadow: var(--neon-glow-soft);
       backdrop-filter: blur(5px);
+      z-index: 1; /* Asegura que el contenido esté sobre los logos */
     }
 
     @keyframes borderGlow {
@@ -93,7 +125,7 @@
       }
     }
 
-    /* Animación de entrada para las secciones */
+    /* El resto de tu CSS permanece igual... */
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -105,7 +137,6 @@
       }
     }
 
-    /* Títulos con gradiente morado y efecto neon */
     h1 {
       text-align: center;
       margin-bottom: 20px;
@@ -143,7 +174,6 @@
       line-height: 1.5;
     }
 
-    /* Botones - Estilos mejorados con efecto neon */
     .btn {
       width: 100%;
       padding: 18px 24px;
@@ -181,7 +211,6 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
-    /* Efecto neon al hover */
     .btn::before {
       content: '';
       position: absolute;
@@ -231,7 +260,6 @@
       box-shadow: 0 8px 25px rgba(56, 176, 0, 0.4), 0 0 15px rgba(56, 176, 0, 0.5);
     }
 
-    /* Botón con efecto de pulso neon */
     .pulse {
       animation: neonPulse 2s infinite;
     }
@@ -248,7 +276,6 @@
       }
     }
 
-    /* Estados */
     .hidden {
       display: none !important;
     }
@@ -259,7 +286,6 @@
       pointer-events: none;
     }
 
-    /* Indicador de pasos mejorado con efecto neon */
     .step-indicator {
       display: flex;
       justify-content: center;
@@ -330,7 +356,6 @@
       box-shadow: 0 0 10px var(--success);
     }
 
-    /* Formularios con efecto neon */
     .form-group {
       margin-bottom: 25px;
       animation: fadeInUp 0.5s ease-out;
@@ -373,7 +398,6 @@
       border-color: var(--border);
     }
 
-    /* Select con icono personalizado y efecto neon */
     select {
       appearance: none;
       background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c77dff'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
@@ -388,7 +412,6 @@
       border-color: var(--neon-purple);
     }
 
-    /* Recordatorio con borde neon */
     .reminder {
       background: linear-gradient(135deg, rgba(45, 45, 45, 0.8) 0%, rgba(37, 37, 37, 0.9) 100%);
       border-left: 5px solid var(--neon-purple);
@@ -430,7 +453,6 @@
       font-size: 14px;
     }
 
-    /* Resumen de reserva con efecto neon */
     .summary {
       background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(34, 34, 34, 0.95) 100%);
       border-radius: var(--radius);
@@ -473,7 +495,6 @@
       word-break: break-word;
     }
 
-    /* Vista previa PDF con efecto neon */
     .pdf-preview {
       background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(34, 34, 34, 0.95) 100%);
       border-radius: var(--radius);
@@ -529,7 +550,6 @@
       margin-bottom: 0;
     }
 
-    /* Animación de carga con efecto neon */
     .loading {
       display: flex;
       flex-direction: column;
@@ -567,7 +587,6 @@
       max-width: 300px;
     }
 
-    /* Footer con efecto neon */
     footer {
       text-align: center;
       font-size: 14px;
@@ -593,7 +612,6 @@
       box-shadow: 0 0 5px var(--neon-purple-light);
     }
 
-    /* Iconos en botones */
     .btn-icon {
       font-size: 20px;
       transition: transform 0.3s ease;
@@ -603,7 +621,6 @@
       transform: scale(1.2);
     }
 
-    /* Efecto especial para el título del local seleccionado */
     #local-selected {
       color: var(--neon-purple-light);
       font-weight: 700;
@@ -627,7 +644,6 @@
       }
     }
 
-    /* Scrollbar personalizada con colores morados */
     ::-webkit-scrollbar {
       width: 10px;
     }
@@ -647,7 +663,6 @@
       box-shadow: 0 0 10px var(--neon-purple-light);
     }
 
-    /* Responsive */
     @media (max-width: 480px) {
       .container {
         padding: 20px 15px;
@@ -675,7 +690,6 @@
       }
     }
 
-    /* Animación para elementos que aparecen */
     .fade-in {
       animation: fadeInUp 0.5s ease-out;
     }
@@ -683,557 +697,549 @@
 </head>
 <body>
 
-<div class="container">
+  <!-- LOGOS DE FONDO -->
+  <img src="img/logo-izq.png" alt="Logo izquierdo" class="logo-fondo izquierda">
+  <img src="img/logo-der.png" alt="Logo derecho" class="logo-fondo derecha">
 
-  <!-- Paso 1 - Tipo de reserva -->
-  <div id="step1" class="fade-in">
-    <div class="step-indicator">
-      <div class="step active">1</div>
-      <div class="step">2</div>
-      <div class="step">3</div>
-    </div>
-    
-    <h1>RESERVAS</h1>
-    <p>Selecciona el tipo de reserva que deseas realizar</p>
+  <div class="container">
 
-    <button class="btn btn-primary pulse" onclick="selectTipo('Restaurante')">
-      <span class="btn-icon">🍽</span>
-      Haz Tu Reserva
-    </button>
-  </div>
-
-  <!-- Paso 2 - Selección de local -->
-  <div id="step2" class="hidden">
-    <div class="step-indicator">
-      <div class="step completed">1</div>
-      <div class="step active">2</div>
-      <div class="step">3</div>
-    </div>
-    
-    <h1>SELECCIÓN DE LOCAL</h1>
-    <p>Elige uno de nuestros locales disponibles</p>
-
-    <div class="form-group">
-      <label for="local-select">Local:</label>
-      <select id="local-select" onchange="updateLocalInfo()">
-        <option value="">Selecciona un local...</option>
-        <!-- Locales ordenados alfabéticamente A-Z -->
-        <option value="Parrillita Alajuela Centro">Parrillita Alajuela Centro</option>
-        <option value="Los años Locos Heredia">Los años Locos Heredia</option>
-        <option value="Los años Locos San Joaquín">Los años Locos San Joaquín</option>
-        <option value="Parrillita Barrio San Jose">Parrillita Barrio San Jose</option>
-        <option value="Parrillita Pirro">Parrillita Pirro</option>
-        <option value="Parrillita Sabana">Parrillita Sabana</option>
-        <option value="Parrillita San Joaquin">Parrillita San Joaquin</option>
-        <option value="Parrillita San Pedro">Parrillita San Pedro</option>
-        <option value="Parrillita Universidad Nacional">Parrillita Universidad Nacional</option>
-      </select>
-    </div>
-
-    <button class="btn btn-secondary" onclick="backToStep1()">
-      <span class="btn-icon">⬅</span>
-      Volver
-    </button>
-    <button class="btn btn-primary" onclick="proceedToForm()" id="continue-btn" disabled>
-      <span class="btn-icon">→</span>
-      Continuar
-    </button>
-  </div>
-
-  <!-- Paso 3 - Formulario de reserva -->
-  <div id="step3" class="hidden">
-    <div class="step-indicator">
-      <div class="step completed">1</div>
-      <div class="step completed">2</div>
-      <div class="step active">3</div>
-    </div>
-    
-    <h1>COMPLETA TU RESERVA</h1>
-    <p>Local: <span id="local-selected"></span></p>
-
-    <form id="reservation-form">
-      <!-- SE ELIMINÓ EL INPUT DE LOCAL QUE SE REPETÍA -->
+    <!-- Paso 1 - Tipo de reserva -->
+    <div id="step1" class="fade-in">
+      <div class="step-indicator">
+        <div class="step active">1</div>
+        <div class="step">2</div>
+        <div class="step">3</div>
+      </div>
       
-      <div class="form-group">
-        <label for="date">Fecha:</label>
-        <input type="date" id="date" required>
+      <h1>RESERVAS</h1>
+      <p>Selecciona el tipo de reserva que deseas realizar</p>
+
+      <button class="btn btn-primary pulse" onclick="selectTipo('Restaurante')">
+        <span class="btn-icon">🍽</span>
+        Haz Tu Reserva
+      </button>
+    </div>
+
+    <!-- Paso 2 - Selección de local -->
+    <div id="step2" class="hidden">
+      <div class="step-indicator">
+        <div class="step completed">1</div>
+        <div class="step active">2</div>
+        <div class="step">3</div>
       </div>
+      
+      <h1>SELECCIÓN DE LOCAL</h1>
+      <p>Elige uno de nuestros locales disponibles</p>
 
       <div class="form-group">
-        <label for="time">Hora:</label>
-        <input type="time" id="time" required>
-      </div>
-
-      <div class="form-group">
-        <label for="people">Número de personas:</label>
-        <select id="people" required>
-          <option value="">Selecciona...</option>
-          <option value="1">1 persona</option>
-          <option value="2">2 personas</option>
-          <option value="3">3 personas</option>
-          <option value="4">4 personas</option>
-          <option value="5">5 personas</option>
-          <option value="6">6 personas</option>
-          <option value="7">7 personas</option>
-          <option value="8">8 personas</option>
-          <option value="9">9 personas</option>
-          <option value="10">10 personas</option>
-          <option value="11">Más de 10 personas</option>
+        <label for="local-select">Local:</label>
+        <select id="local-select" onchange="updateLocalInfo()">
+          <option value="">Selecciona un local...</option>
+          <!-- Locales ordenados alfabéticamente A-Z -->
+          <option value="Alajuela Centro">Alajuela Centro</option>
+          <option value="Los años Locos Heredia">Los años Locos Heredia</option>
+          <option value="Los años Locos San Joaquín">Los años Locos San Joaquín</option>
+          <option value="Barrio San Jose">Barrio San Jose</option>
+          <option value="Pirro">Pirro</option>
+          <option value="Sabana">Sabana</option>
+          <option value="San Joaquin">San Joaquin</option>
+          <option value="San Pedro">San Pedro</option>
+          <option value="Universidad Nacional">Universidad Nacional</option>
         </select>
       </div>
 
-      <div class="form-group">
-        <label for="name">Nombre completo:</label>
-        <input type="text" id="name" required>
-      </div>
-
-      <div class="form-group">
-        <label for="phone">Número de teléfono:</label>
-        <input type="tel" id="phone" required>
-      </div>
-
-      <div class="reminder">
-        <h3>⚠️ Importante</h3>
-        <p>Recordar que después de la hora acordada cuenta con 5 minutos de gracia, de no estar se procederá a eliminar la reserva.</p>
-      </div>
-
-      <button type="button" class="btn btn-secondary" onclick="backToStep2()">
+      <button class="btn btn-secondary" onclick="backToStep1()">
         <span class="btn-icon">⬅</span>
         Volver
       </button>
-      <button type="submit" class="btn btn-primary">
-        <span class="btn-icon">📄</span>
-        Generar PDF
+      <button class="btn btn-primary" onclick="proceedToForm()" id="continue-btn" disabled>
+        <span class="btn-icon">→</span>
+        Continuar
       </button>
-    </form>
-  </div>
-
-  <!-- Paso 4 - Vista previa del PDF -->
-  <div id="step4" class="hidden">
-    <div class="step-indicator">
-      <div class="step completed">1</div>
-      <div class="step completed">2</div>
-      <div class="step completed">3</div>
-    </div>
-    
-    <h1>PDF GENERADO</h1>
-    <p>Revisa tu reserva antes de enviar</p>
-
-    <div class="summary" id="reservation-summary">
-      <!-- Los detalles se llenarán con JavaScript -->
     </div>
 
-    <div class="pdf-preview">
-      <h3>📄 Vista Previa del PDF</h3>
-      <div id="pdf-preview-content">
-        <!-- Vista previa del PDF se generará aquí -->
+    <!-- Paso 3 - Formulario de reserva -->
+    <div id="step3" class="hidden">
+      <div class="step-indicator">
+        <div class="step completed">1</div>
+        <div class="step completed">2</div>
+        <div class="step active">3</div>
       </div>
-      <div class="pdf-info">
-        <p><strong>Nombre del archivo:</strong> <span id="pdf-filename"></span></p>
-        <p>El PDF se generará con el formato: <code>Nombre_Teléfono.pdf</code> para fácil búsqueda en WhatsApp.</p>
+      
+      <h1>COMPLETA TU RESERVA</h1>
+      <p>Local: <span id="local-selected"></span></p>
+
+      <form id="reservation-form">
+        
+        <div class="form-group">
+          <label for="date">Fecha:</label>
+          <input type="date" id="date" required>
+        </div>
+
+        <div class="form-group">
+          <label for="time">Hora:</label>
+          <input type="time" id="time" required>
+        </div>
+
+        <div class="form-group">
+          <label for="people">Número de personas:</label>
+          <select id="people" required>
+            <option value="">Selecciona...</option>
+            <option value="1">1 persona</option>
+            <option value="2">2 personas</option>
+            <option value="3">3 personas</option>
+            <option value="4">4 personas</option>
+            <option value="5">5 personas</option>
+            <option value="6">6 personas</option>
+            <option value="7">7 personas</option>
+            <option value="8">8 personas</option>
+            <option value="9">9 personas</option>
+            <option value="10">10 personas</option>
+            <option value="11">Más de 10 personas</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="name">Nombre completo:</label>
+          <input type="text" id="name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Número de teléfono:</label>
+          <input type="tel" id="phone" required>
+        </div>
+
+        <div class="reminder">
+          <h3>⚠️ Importante</h3>
+          <p>Recordar que después de la hora acordada cuenta con 5 minutos de gracia, de no estar se procederá a eliminar la reserva.</p>
+        </div>
+
+        <button type="button" class="btn btn-secondary" onclick="backToStep2()">
+          <span class="btn-icon">⬅</span>
+          Volver
+        </button>
+        <button type="submit" class="btn btn-primary">
+          <span class="btn-icon">📄</span>
+          Generar PDF
+        </button>
+      </form>
+    </div>
+
+    <!-- Paso 4 - Vista previa del PDF -->
+    <div id="step4" class="hidden">
+      <div class="step-indicator">
+        <div class="step completed">1</div>
+        <div class="step completed">2</div>
+        <div class="step completed">3</div>
+      </div>
+      
+      <h1>PDF GENERADO</h1>
+      <p>Revisa tu reserva antes de enviar</p>
+
+      <div class="summary" id="reservation-summary">
+        <!-- Los detalles se llenarán con JavaScript -->
+      </div>
+
+      <div class="pdf-preview">
+        <h3>📄 Vista Previa del PDF</h3>
+        <div id="pdf-preview-content">
+          <!-- Vista previa del PDF se generará aquí -->
+        </div>
+        <div class="pdf-info">
+          <p><strong>Nombre del archivo:</strong> <span id="pdf-filename"></span></p>
+          <p>El PDF se generará con el formato: <code>Nombre_Teléfono.pdf</code> para fácil búsqueda en WhatsApp.</p>
+        </div>
+      </div>
+
+      <div class="reminder">
+        <h3>⚠️ Recordatorio</h3>
+        <p>Después de la hora acordada cuenta con 5 minutos de gracia, de no estar se procederá a eliminar la reserva.</p>
+      </div>
+
+      <button class="btn btn-secondary" onclick="backToStep3()">
+        <span class="btn-icon">✏️</span>
+        Editar reserva
+      </button>
+      <button class="btn btn-success" onclick="sendPDFToWhatsApp()">
+        <span class="btn-icon">📤</span>
+        Enviar PDF por WhatsApp
+      </button>
+    </div>
+
+    <!-- Paso 5 - Carga y confirmación -->
+    <div id="step5" class="hidden">
+      <div class="loading">
+        <div class="spinner"></div>
+        <h3>Generando PDF...</h3>
+        <p>Tu archivo se está preparando para enviar.</p>
       </div>
     </div>
 
-    <div class="reminder">
-      <h3>⚠️ Recordatorio</h3>
-      <p>Después de la hora acordada cuenta con 5 minutos de gracia, de no estar se procederá a eliminar la reserva.</p>
-    </div>
+    <footer>
+      © La Parrillita de Pepe · Reservas oficiales · WhatsApp: 50661781454
+    </footer>
 
-    <button class="btn btn-secondary" onclick="backToStep3()">
-      <span class="btn-icon">✏️</span>
-      Editar reserva
-    </button>
-    <button class="btn btn-success" onclick="sendPDFToWhatsApp()">
-      <span class="btn-icon">📤</span>
-      Enviar PDF por WhatsApp
-    </button>
   </div>
 
-  <!-- Paso 5 - Carga y confirmación -->
-  <div id="step5" class="hidden">
-    <div class="loading">
-      <div class="spinner"></div>
-      <h3>Generando PDF...</h3>
-      <p>Tu archivo se está preparando para enviar.</p>
-    </div>
-  </div>
+  <script>
+    // Variables globales para almacenar los datos de la reserva
+    let tipoSeleccionado = '';
+    let localSeleccionado = '';
+    const numeroWhatsApp = '50661781454';
+    let reservationData = {};
+    let pdfBlob = null;
+    let pdfFileName = '';
 
-  <footer>
-    © La Parrillita de Pepe · Reservas oficiales · WhatsApp: 50661781454
-  </footer>
-
-</div>
-
-<script>
-  // Variables globales para almacenar los datos de la reserva
-  let tipoSeleccionado = '';
-  let localSeleccionado = '';
-  const numeroWhatsApp = '50661781454';
-  let reservationData = {};
-  let pdfBlob = null;
-  let pdfFileName = '';
-
-  // Paso 1: Seleccionar tipo de reserva
-  function selectTipo(tipo) {
-    tipoSeleccionado = tipo;
-    document.getElementById('step1').classList.add('hidden');
-    document.getElementById('step2').classList.remove('hidden');
-  }
-
-  // Actualizar información del local seleccionado
-  function updateLocalInfo() {
-    const select = document.getElementById('local-select');
-    const continueBtn = document.getElementById('continue-btn');
-    
-    if (select.value) {
-      continueBtn.disabled = false;
-      continueBtn.classList.remove('disabled');
-    } else {
-      continueBtn.disabled = true;
-      continueBtn.classList.add('disabled');
+    // Paso 1: Seleccionar tipo de reserva
+    function selectTipo(tipo) {
+      tipoSeleccionado = tipo;
+      document.getElementById('step1').classList.add('hidden');
+      document.getElementById('step2').classList.remove('hidden');
     }
-  }
 
-  // 🔒 Fechas bloqueadas por local
-  const fechasBloqueadas = {
-    "Parrillita Alajuela Centro": [],
-    "Los años Locos Heredia": [],
-    "Los años Locos San Joaquín": [],
-    "Parrillita Barrio San Jose": [],
-    "Parrillita Pirro": [],
-    "Parrillita Sabana": [],
-    "Parrillita San Joaquin": [],
-    "Parrillita San Pedro": ["2026-02-14"],
-    "Parrillita Universidad Nacional": []
-  };
-
-  // 🚫 Validar fechas bloqueadas según el local
-  document.getElementById('date').addEventListener('change', function () {
-    const fechaSeleccionada = this.value;
-    const local = localSeleccionado;
-
-    if (!local) return;
-
-    if (fechasBloqueadas[local]?.includes(fechaSeleccionada)) {
-      alert("❌ Esta fecha no está disponible para este local. Por favor elige otra.");
-      this.value = "";
+    // Actualizar información del local seleccionado
+    function updateLocalInfo() {
+      const select = document.getElementById('local-select');
+      const continueBtn = document.getElementById('continue-btn');
+      
+      if (select.value) {
+        continueBtn.disabled = false;
+        continueBtn.classList.remove('disabled');
+      } else {
+        continueBtn.disabled = true;
+        continueBtn.classList.add('disabled');
+      }
     }
-  });
 
-  // Proceder al formulario después de seleccionar local
-  function proceedToForm() {
-    const select = document.getElementById('local-select');
-    
-    if (!select.value) {
-      alert('Por favor, selecciona un local.');
-      return;
-    }
-    
-    localSeleccionado = select.value;
-    
-    // Actualizar el texto en el paso 3
-    document.getElementById('local-selected').textContent = localSeleccionado;
-    
-    // Mostrar paso 3
-    document.getElementById('step2').classList.add('hidden');
-    document.getElementById('step3').classList.remove('hidden');
-    
-    // Configurar fecha mínima como hoy
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('date').setAttribute('min', today);
-    
-    // Configurar hora mínima y máxima
-    document.getElementById('time').setAttribute('min', '10:00');
-    document.getElementById('time').setAttribute('max', '22:00');
-  }
-
-  // Paso 3: Volver al paso 2
-  function backToStep2() {
-    document.getElementById('step3').classList.add('hidden');
-    document.getElementById('step2').classList.remove('hidden');
-  }
-
-  // Paso 2: Volver al paso 1
-  function backToStep1() {
-    // Resetear la selección del local
-    document.getElementById('local-select').value = '';
-    document.getElementById('continue-btn').disabled = true;
-    document.getElementById('continue-btn').classList.add('disabled');
-    
-    document.getElementById('step2').classList.add('hidden');
-    document.getElementById('step1').classList.remove('hidden');
-  }
-
-  // Paso 4: Volver al paso 3
-  function backToStep3() {
-    document.getElementById('step4').classList.add('hidden');
-    document.getElementById('step3').classList.remove('hidden');
-  }
-
-  // Manejar el envío del formulario
-  document.getElementById('reservation-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    // Obtener los datos del formulario
-    reservationData = {
-      tipo: tipoSeleccionado,
-      local: localSeleccionado, // Usamos la variable global localSeleccionado
-      fecha: document.getElementById('date').value,
-      hora: document.getElementById('time').value,
-      personas: document.getElementById('people').value,
-      nombre: document.getElementById('name').value,
-      telefono: document.getElementById('phone').value,
-      fechaCreacion: new Date().toLocaleString('es-ES')
+    // 🔒 Fechas bloqueadas por local
+    const fechasBloqueadas = {
+      "Alajuela Centro": [],
+      "Los años Locos Heredia": [],
+      "Los años Locos San Joaquín": [],
+      "Barrio San Jose": [],
+      "Pirro": [],
+      "Sabana": [],
+      "San Joaquin": [],
+      "San Pedro": ["2026-02-14"],
+      "Universidad Nacional": []
     };
-    
-    // Validar que todos los campos estén completos
-    for (let key in reservationData) {
-      if (!reservationData[key] && key !== 'fechaCreacion') {
-        alert('Por favor, completa todos los campos del formulario.');
+
+    // 🚫 Validar fechas bloqueadas según el local
+    document.getElementById('date').addEventListener('change', function () {
+      const fechaSeleccionada = this.value;
+      const local = localSeleccionado;
+
+      if (!local) return;
+
+      if (fechasBloqueadas[local]?.includes(fechaSeleccionada)) {
+        alert("❌ Esta fecha no está disponible para este local. Por favor elige otra.");
+        this.value = "";
+      }
+    });
+
+    // Proceder al formulario después de seleccionar local
+    function proceedToForm() {
+      const select = document.getElementById('local-select');
+      
+      if (!select.value) {
+        alert('Por favor, selecciona un local.');
         return;
       }
+      
+      localSeleccionado = select.value;
+      
+      // Actualizar el texto en el paso 3
+      document.getElementById('local-selected').textContent = localSeleccionado;
+      
+      // Mostrar paso 3
+      document.getElementById('step2').classList.add('hidden');
+      document.getElementById('step3').classList.remove('hidden');
+      
+      // Configurar fecha mínima como hoy
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('date').setAttribute('min', today);
+      
+      // Configurar hora mínima y máxima
+      document.getElementById('time').setAttribute('min', '10:00');
+      document.getElementById('time').setAttribute('max', '22:00');
     }
-    
-    // Mostrar paso de carga
-    document.getElementById('step3').classList.add('hidden');
-    document.getElementById('step5').classList.remove('hidden');
-    
-    // Generar PDF después de un pequeño delay para mostrar la animación
-    setTimeout(() => {
-      generatePDF();
-    }, 500);
-  });
 
-  // Generar PDF con los datos de la reserva
-  function generatePDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    
-    // Configurar nombre del archivo
-    const nombreSinEspacios = reservationData.nombre.replace(/\s+/g, '_');
-    const telefonoLimpio = reservationData.telefono.replace(/\s+/g, '');
-    pdfFileName = `${nombreSinEspacios}_${telefonoLimpio}.pdf`;
-    
-    // Configurar el documento
-    doc.setFontSize(20);
-    doc.setTextColor(157, 78, 221); // Morado neon
-    doc.text('CONFIRMACIÓN DE RESERVA', 105, 20, { align: 'center' });
-    
-    // Logo/Encabezado
-    doc.setFontSize(12);
-    doc.setTextColor(199, 125, 255); // Morado claro
-    doc.text('La Parrillita de Pepe', 105, 30, { align: 'center' });
-    
-    // Línea separadora
-    doc.setDrawColor(157, 78, 221);
-    doc.setLineWidth(0.5);
-    doc.line(20, 35, 190, 35);
-    
-    // Información de la reserva
-    doc.setFontSize(11);
-    doc.setTextColor(0, 0, 0);
-    
-    let y = 45;
-    
-    // Formatear fecha para mostrar
-    const fecha = new Date(reservationData.fecha);
-    const fechaFormateada = fecha.toLocaleDateString('es-ES', { 
-      weekday: 'long', 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    // Paso 3: Volver al paso 2
+    function backToStep2() {
+      document.getElementById('step3').classList.add('hidden');
+      document.getElementById('step2').classList.remove('hidden');
+    }
+
+    // Paso 2: Volver al paso 1
+    function backToStep1() {
+      // Resetear la selección del local
+      document.getElementById('local-select').value = '';
+      document.getElementById('continue-btn').disabled = true;
+      document.getElementById('continue-btn').classList.add('disabled');
+      
+      document.getElementById('step2').classList.add('hidden');
+      document.getElementById('step1').classList.remove('hidden');
+    }
+
+    // Paso 4: Volver al paso 3
+    function backToStep3() {
+      document.getElementById('step4').classList.add('hidden');
+      document.getElementById('step3').classList.remove('hidden');
+    }
+
+    // Manejar el envío del formulario
+    document.getElementById('reservation-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      // Obtener los datos del formulario
+      reservationData = {
+        tipo: tipoSeleccionado,
+        local: localSeleccionado,
+        fecha: document.getElementById('date').value,
+        hora: document.getElementById('time').value,
+        personas: document.getElementById('people').value,
+        nombre: document.getElementById('name').value,
+        telefono: document.getElementById('phone').value,
+        fechaCreacion: new Date().toLocaleString('es-ES')
+      };
+      
+      // Validar que todos los campos estén completos
+      for (let key in reservationData) {
+        if (!reservationData[key] && key !== 'fechaCreacion') {
+          alert('Por favor, completa todos los campos del formulario.');
+          return;
+        }
+      }
+      
+      // Mostrar paso de carga
+      document.getElementById('step3').classList.add('hidden');
+      document.getElementById('step5').classList.remove('hidden');
+      
+      // Generar PDF después de un pequeño delay para mostrar la animación
+      setTimeout(() => {
+        generatePDF();
+      }, 500);
     });
-    
-    // Tabla de información
-    const tableData = [
-      ['Tipo de Reserva', reservationData.tipo],
-      ['Local', reservationData.local],
-      ['Fecha', fechaFormateada],
-      ['Hora', reservationData.hora],
-      ['Número de Personas', reservationData.personas],
-      ['Nombre', reservationData.nombre],
-      ['Teléfono', reservationData.telefono],
-      ['Fecha de Creación', reservationData.fechaCreacion],
-      ['Número de Referencia', generarNumeroReferencia()]
-    ];
-    
-    // Usar autoTable para una tabla más profesional
-    doc.autoTable({
-      startY: 50,
-      head: [['Detalle', 'Información']],
-      body: tableData,
-      theme: 'grid',
-      headStyles: { fillColor: [157, 78, 221], textColor: [255, 255, 255] }, // Morado neon
-      styles: { fontSize: 10, cellPadding: 5 },
-      columnStyles: { 
-        0: { fontStyle: 'bold', cellWidth: 70 },
-        1: { cellWidth: 100 }
-      },
-      margin: { left: 20, right: 20 }
-    });
-    
-    // Obtener la posición Y después de la tabla
-    const finalY = doc.lastAutoTable.finalY + 15;
-    
-    // Recordatorio importante
-    doc.setFontSize(10);
-    doc.setTextColor(157, 78, 221); // Morado neon
-    doc.setFont(undefined, 'bold');
-    doc.text('⚠️ RECORDATORIO IMPORTANTE', 20, finalY);
-    
-    doc.setFontSize(9);
-    doc.setTextColor(0, 0, 0);
-    doc.setFont(undefined, 'normal');
-    const reminderText = 'Después de la hora acordada cuenta con 5 minutos de gracia, de no estar se procederá a eliminar la reserva.';
-    doc.text(reminderText, 20, finalY + 8, { maxWidth: 170 });
-    
-    // Información de contacto
-    doc.setFontSize(8);
-    doc.setTextColor(100, 100, 100);
-    doc.text('Para consultas o modificaciones contactar al WhatsApp: 50661781454', 105, 280, { align: 'center' });
-    
-    // Guardar PDF como blob
-    pdfBlob = doc.output('blob');
-    
-    // Mostrar resumen en el paso 4
-    showReservationSummary();
-    
+
+    // Generar PDF con los datos de la reserva
+    function generatePDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      
+      // Configurar nombre del archivo
+      const nombreSinEspacios = reservationData.nombre.replace(/\s+/g, '_');
+      const telefonoLimpio = reservationData.telefono.replace(/\s+/g, '');
+      pdfFileName = `${nombreSinEspacios}_${telefonoLimpio}.pdf`;
+      
+      // Configurar el documento
+      doc.setFontSize(20);
+      doc.setTextColor(157, 78, 221); // Morado neon
+      doc.text('CONFIRMACIÓN DE RESERVA', 105, 20, { align: 'center' });
+      
+      // Logo/Encabezado
+      doc.setFontSize(12);
+      doc.setTextColor(199, 125, 255); // Morado claro
+      doc.text('La Parrillita de Pepe', 105, 30, { align: 'center' });
+      
+      // Línea separadora
+      doc.setDrawColor(157, 78, 221);
+      doc.setLineWidth(0.5);
+      doc.line(20, 35, 190, 35);
+      
+      // Información de la reserva
+      doc.setFontSize(11);
+      doc.setTextColor(0, 0, 0);
+      
+      // Formatear fecha para mostrar
+      const fecha = new Date(reservationData.fecha);
+      const fechaFormateada = fecha.toLocaleDateString('es-ES', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+      
+      // Tabla de información
+      const tableData = [
+        ['Tipo de Reserva', reservationData.tipo],
+        ['Local', reservationData.local],
+        ['Fecha', fechaFormateada],
+        ['Hora', reservationData.hora],
+        ['Número de Personas', reservationData.personas],
+        ['Nombre', reservationData.nombre],
+        ['Teléfono', reservationData.telefono],
+        ['Fecha de Creación', reservationData.fechaCreacion],
+        ['Número de Referencia', generarNumeroReferencia()]
+      ];
+      
+      // Usar autoTable para una tabla más profesional
+      doc.autoTable({
+        startY: 50,
+        head: [['Detalle', 'Información']],
+        body: tableData,
+        theme: 'grid',
+        headStyles: { fillColor: [157, 78, 221], textColor: [255, 255, 255] },
+        styles: { fontSize: 10, cellPadding: 5 },
+        columnStyles: { 
+          0: { fontStyle: 'bold', cellWidth: 70 },
+          1: { cellWidth: 100 }
+        },
+        margin: { left: 20, right: 20 }
+      });
+      
+      // Obtener la posición Y después de la tabla
+      const finalY = doc.lastAutoTable.finalY + 15;
+      
+      // Recordatorio importante
+      doc.setFontSize(10);
+      doc.setTextColor(157, 78, 221);
+      doc.setFont(undefined, 'bold');
+      doc.text('⚠️ RECORDATORIO IMPORTANTE', 20, finalY);
+      
+      doc.setFontSize(9);
+      doc.setTextColor(0, 0, 0);
+      doc.setFont(undefined, 'normal');
+      const reminderText = 'Después de la hora acordada cuenta con 5 minutos de gracia, de no estar se procederá a eliminar la reserva.';
+      doc.text(reminderText, 20, finalY + 8, { maxWidth: 170 });
+      
+      // Información de contacto
+      doc.setFontSize(8);
+      doc.setTextColor(100, 100, 100);
+      doc.text('Para consultas o modificaciones contactar al WhatsApp: 50661781454', 105, 280, { align: 'center' });
+      
+      // Guardar PDF como blob
+      pdfBlob = doc.output('blob');
+      
+      // Mostrar resumen en el paso 4
+      showReservationSummary();
+      
+      // Mostrar vista previa del PDF
+      showPDFPreview();
+      
+      // Mostrar nombre del archivo
+      document.getElementById('pdf-filename').textContent = pdfFileName;
+      
+      // Ir al paso 4
+      document.getElementById('step5').classList.add('hidden');
+      document.getElementById('step4').classList.remove('hidden');
+    }
+
+    // Generar número de referencia único
+    function generarNumeroReferencia() {
+      const fecha = new Date();
+      const timestamp = fecha.getTime().toString().slice(-6);
+      const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+      return `RES-${timestamp}${random}`;
+    }
+
     // Mostrar vista previa del PDF
-    showPDFPreview();
-    
-    // Mostrar nombre del archivo
-    document.getElementById('pdf-filename').textContent = pdfFileName;
-    
-    // Ir al paso 4
-    document.getElementById('step5').classList.add('hidden');
-    document.getElementById('step4').classList.remove('hidden');
-  }
-
-  // Generar número de referencia único
-  function generarNumeroReferencia() {
-    const fecha = new Date();
-    const timestamp = fecha.getTime().toString().slice(-6);
-    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-    return `RES-${timestamp}${random}`;
-  }
-
-  // Mostrar vista previa del PDF
-  function showPDFPreview() {
-    const previewDiv = document.getElementById('pdf-preview-content');
-    
-    // Crear una vista previa simple del PDF
-    previewDiv.innerHTML = `
-      <div style="background: white; color: black; padding: 15px; border-radius: 5px; font-family: Arial, sans-serif; border: 2px solid #9d4edd; box-shadow: 0 0 10px #c77dff;">
-        <h4 style="color: #9d4edd; margin-top: 0; text-align: center; font-weight: bold;">CONFIRMACIÓN DE RESERVA</h4>
-        <p style="color: #c77dff; text-align: center; font-weight: bold; text-shadow: 0 0 5px rgba(199, 125, 255, 0.3);">La Parrillita de Pepe</p>
-        <hr style="border-color: #9d4edd; box-shadow: 0 0 5px #9d4edd;">
-        
-        <div style="margin-top: 15px;">
-          <p><strong>Tipo de Reserva:</strong> ${reservationData.tipo}</p>
-          <p><strong>Local:</strong> ${reservationData.local}</p>
-          <p><strong>Fecha:</strong> ${reservationData.fecha}</p>
-          <p><strong>Hora:</strong> ${reservationData.hora}</p>
-          <p><strong>Personas:</strong> ${reservationData.personas}</p>
-          <p><strong>Nombre:</strong> ${reservationData.nombre}</p>
-          <p><strong>Teléfono:</strong> ${reservationData.telefono}</p>
-        </div>
-        
-        <div style="background: #f8f0ff; padding: 10px; border-left: 3px solid #9d4edd; margin-top: 15px; border-radius: 3px;">
-          <p style="margin: 0; font-size: 12px;">
-            <strong style="color: #9d4edd;">⚠️ Recordatorio:</strong> Después de la hora acordada cuenta con 5 minutos de gracia, de no estar se procederá a eliminar la reserva.
+    function showPDFPreview() {
+      const previewDiv = document.getElementById('pdf-preview-content');
+      
+      previewDiv.innerHTML = `
+        <div style="background: white; color: black; padding: 15px; border-radius: 5px; font-family: Arial, sans-serif; border: 2px solid #9d4edd; box-shadow: 0 0 10px #c77dff;">
+          <h4 style="color: #9d4edd; margin-top: 0; text-align: center; font-weight: bold;">CONFIRMACIÓN DE RESERVA</h4>
+          <p style="color: #c77dff; text-align: center; font-weight: bold; text-shadow: 0 0 5px rgba(199, 125, 255, 0.3);">La Parrillita de Pepe</p>
+          <hr style="border-color: #9d4edd; box-shadow: 0 0 5px #9d4edd;">
+          
+          <div style="margin-top: 15px;">
+            <p><strong>Tipo de Reserva:</strong> ${reservationData.tipo}</p>
+            <p><strong>Local:</strong> ${reservationData.local}</p>
+            <p><strong>Fecha:</strong> ${reservationData.fecha}</p>
+            <p><strong>Hora:</strong> ${reservationData.hora}</p>
+            <p><strong>Personas:</strong> ${reservationData.personas}</p>
+            <p><strong>Nombre:</strong> ${reservationData.nombre}</p>
+            <p><strong>Teléfono:</strong> ${reservationData.telefono}</p>
+          </div>
+          
+          <div style="background: #f8f0ff; padding: 10px; border-left: 3px solid #9d4edd; margin-top: 15px; border-radius: 3px;">
+            <p style="margin: 0; font-size: 12px;">
+              <strong style="color: #9d4edd;">⚠️ Recordatorio:</strong> Después de la hora acordada cuenta con 5 minutos de gracia, de no estar se procederá a eliminar la reserva.
+            </p>
+          </div>
+          
+          <p style="font-size: 10px; color: #666; text-align: center; margin-top: 15px;">
+            Para consultas: WhatsApp 50661781454
           </p>
         </div>
-        
-        <p style="font-size: 10px; color: #666; text-align: center; margin-top: 15px;">
-          Para consultas: WhatsApp 50661781454
-        </p>
-      </div>
-    `;
-  }
-
-  // Mostrar resumen de la reserva
-  function showReservationSummary() {
-    const summaryDiv = document.getElementById('reservation-summary');
-    
-    // Formatear fecha para mostrar
-    const fecha = new Date(reservationData.fecha);
-    const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const fechaFormateada = fecha.toLocaleDateString('es-ES', opcionesFecha);
-    
-    // Crear el HTML del resumen
-    summaryDiv.innerHTML = `
-      <div class="summary-item">
-        <span class="summary-label">Local:</span>
-        <span class="summary-value">${reservationData.local}</span>
-      </div>
-      <div class="summary-item">
-        <span class="summary-label">Fecha:</span>
-        <span class="summary-value">${fechaFormateada}</span>
-      </div>
-      <div class="summary-item">
-        <span class="summary-label">Hora:</span>
-        <span class="summary-value">${reservationData.hora}</span>
-      </div>
-      <div class="summary-item">
-        <span class="summary-label">Personas:</span>
-        <span class="summary-value">${reservationData.personas}</span>
-      </div>
-      <div class="summary-item">
-        <span class="summary-label">Nombre:</span>
-        <span class="summary-value">${reservationData.nombre}</span>
-      </div>
-    `;
-  }
-
-  // Enviar PDF por WhatsApp
-  function sendPDFToWhatsApp() {
-    if (!pdfBlob) {
-      alert('Error: No se ha generado el PDF. Por favor, intenta nuevamente.');
-      return;
+      `;
     }
-    
-    // Crear un mensaje inicial para WhatsApp
-    const mensajeInicial = `🥩 *LA PARRILLITA DE PEPE* 🔥\n\n*RESERVA CONFIRMADA*\n\n📋 *Resumen de Reserva:*\n📍 *Local:* ${reservationData.local}\n📅 *Fecha:* ${reservationData.fecha}\n⏰ *Hora:* ${reservationData.hora}\n👥 *Personas:* ${reservationData.personas}\n👤 *Nombre:* ${reservationData.nombre}\n\nPor favor, confirma mi reserva. Adjunto el comprobante PDF.`;
-    
-    // Enviar primero el mensaje de texto
-    const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeInicial)}`;
-    
-    // Abrir WhatsApp en una nueva ventana
-    const whatsappWindow = window.open(urlWhatsApp, '_blank');
-    
-    // Nota: No podemos adjuntar el PDF automáticamente por seguridad del navegador
-    // El usuario tendrá que adjuntar manualmente el PDF descargado
-    // Primero descargamos el PDF para que el usuario lo tenga
-    downloadPDF();
-    
-    // Mostrar instrucciones
-    setTimeout(() => {
-      if (whatsappWindow && !whatsappWindow.closed) {
-        alert('✅ PDF generado con éxito\n\n📱 *Instrucciones para enviar:*\n1. El PDF se ha descargado a tu dispositivo\n2. En WhatsApp, adjunta el PDF manualmente\n3. Envía el archivo para completar tu reserva\n\n📄 *Nombre del archivo:* ' + pdfFileName);
+
+    // Mostrar resumen de la reserva
+    function showReservationSummary() {
+      const summaryDiv = document.getElementById('reservation-summary');
+      
+      // Formatear fecha para mostrar
+      const fecha = new Date(reservationData.fecha);
+      const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const fechaFormateada = fecha.toLocaleDateString('es-ES', opcionesFecha);
+      
+      summaryDiv.innerHTML = `
+        <div class="summary-item">
+          <span class="summary-label">Local:</span>
+          <span class="summary-value">${reservationData.local}</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Fecha:</span>
+          <span class="summary-value">${fechaFormateada}</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Hora:</span>
+          <span class="summary-value">${reservationData.hora}</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Personas:</span>
+          <span class="summary-value">${reservationData.personas}</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Nombre:</span>
+          <span class="summary-value">${reservationData.nombre}</span>
+        </div>
+      `;
+    }
+
+    // Enviar PDF por WhatsApp
+    function sendPDFToWhatsApp() {
+      if (!pdfBlob) {
+        alert('Error: No se ha generado el PDF. Por favor, intenta nuevamente.');
+        return;
       }
-    }, 1000);
-  }
-
-  // Descargar el PDF
-  function downloadPDF() {
-    const url = URL.createObjectURL(pdfBlob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = pdfFileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }
-
-  // Configurar fecha mínima al cargar la página
-  document.addEventListener('DOMContentLoaded', function() {
-    const today = new Date().toISOString().split('T')[0];
-    if (document.getElementById('date')) {
-      document.getElementById('date').setAttribute('min', today);
+      
+      const mensajeInicial = `🥩 *LA PARRILLITA DE PEPE* 🔥\n\n*RESERVA CONFIRMADA*\n\n📋 *Resumen de Reserva:*\n📍 *Local:* ${reservationData.local}\n📅 *Fecha:* ${reservationData.fecha}\n⏰ *Hora:* ${reservationData.hora}\n👥 *Personas:* ${reservationData.personas}\n👤 *Nombre:* ${reservationData.nombre}\n\nPor favor, confirma mi reserva. Adjunto el comprobante PDF.`;
+      
+      const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeInicial)}`;
+      
+      const whatsappWindow = window.open(urlWhatsApp, '_blank');
+      
+      downloadPDF();
+      
+      setTimeout(() => {
+        if (whatsappWindow && !whatsappWindow.closed) {
+          alert('✅ PDF generado con éxito\n\n📱 *Instrucciones para enviar:*\n1. El PDF se ha descargado a tu dispositivo\n2. En WhatsApp, adjunta el PDF manualmente\n3. Envía el archivo para completar tu reserva\n\n📄 *Nombre del archivo:* ' + pdfFileName);
+        }
+      }, 1000);
     }
-  });
-</script>
+
+    // Descargar el PDF
+    function downloadPDF() {
+      const url = URL.createObjectURL(pdfBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = pdfFileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Configurar fecha mínima al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+      const today = new Date().toISOString().split('T')[0];
+      if (document.getElementById('date')) {
+        document.getElementById('date').setAttribute('min', today);
+      }
+    });
+  </script>
 
 </body>
 </html>
