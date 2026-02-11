@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Reservas | Tu Marca</title>
+  <title>Reservas | La Parrillita de Pepe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- Incluir jsPDF desde CDN -->
@@ -10,217 +10,674 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 
   <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #000000;
-      color: #fff;
+    /* Variables CSS con colores morados y efecto neon */
+    :root {
+      --neon-purple: #9d4edd;
+      --neon-purple-light: #c77dff;
+      --neon-purple-dark: #7b2cbf;
+      --neon-blue: #4361ee;
+      --neon-pink: #f72585;
+      --primary: #9d4edd;
+      --primary-dark: #7b2cbf;
+      --primary-light: #c77dff;
+      --secondary: #5a189a;
+      --secondary-dark: #3c096c;
+      --success: #38b000;
+      --success-dark: #2d9100;
+      --warning: #ff9e00;
+      --warning-dark: #ff8500;
+      --dark: #0a0a0a;
+      --dark-card: #1a1a1a;
+      --dark-input: #2a2a2a;
+      --light: #ffffff;
+      --light-secondary: #cccccc;
+      --light-muted: #888888;
+      --border: #333333;
+      --border-light: #444444;
+      --neon-glow: 0 0 10px var(--neon-purple-light), 
+                   0 0 20px var(--neon-purple-light), 
+                   0 0 30px var(--neon-purple-light);
+      --neon-glow-soft: 0 0 5px var(--neon-purple-light),
+                        0 0 10px var(--neon-purple-light);
+      --shadow: 0 4px 12px rgba(157, 78, 221, 0.2);
+      --shadow-hover: 0 8px 20px rgba(157, 78, 221, 0.3);
+      --transition: all 0.3s ease;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    /* Reset y estilos base */
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
+    body {
+      font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, var(--dark) 0%, #111111 100%);
+      color: var(--light);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Contenedor principal con borde neon */
     .container {
-      max-width: 420px;
-      margin: auto;
-      padding: 30px 20px;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 25px 20px;
+      position: relative;
+      min-height: 100vh;
+      background: rgba(10, 10, 10, 0.85);
+      border: 2px solid transparent;
+      border-image: linear-gradient(45deg, var(--neon-purple), var(--neon-blue), var(--neon-pink), var(--neon-purple));
+      border-image-slice: 1;
+      animation: borderGlow 3s infinite alternate;
+      box-shadow: var(--neon-glow-soft);
+      backdrop-filter: blur(5px);
     }
 
+    @keyframes borderGlow {
+      0% {
+        box-shadow: var(--neon-glow-soft);
+        border-image-source: linear-gradient(45deg, var(--neon-purple), var(--neon-blue), var(--neon-pink), var(--neon-purple));
+      }
+      100% {
+        box-shadow: 0 0 15px var(--neon-purple-light),
+                    0 0 25px var(--neon-purple-light);
+        border-image-source: linear-gradient(45deg, var(--neon-pink), var(--neon-purple), var(--neon-blue), var(--neon-pink));
+      }
+    }
+
+    /* Animación de entrada para las secciones */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Títulos con gradiente morado y efecto neon */
     h1 {
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
+      font-size: 32px;
+      font-weight: 800;
+      background: linear-gradient(45deg, var(--neon-purple), var(--neon-purple-light), var(--neon-blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 1px;
+      animation: fadeInUp 0.5s ease-out;
+      text-shadow: 0 0 10px rgba(157, 78, 221, 0.3);
+      position: relative;
+      padding: 10px 0;
     }
 
-    h2 {
-      text-align: center;
-      margin-bottom: 10px;
-      color: #f1c40f;
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--neon-purple-light), transparent);
+      border-radius: 2px;
+      box-shadow: 0 0 10px var(--neon-purple-light);
     }
 
     p {
       text-align: center;
-      color: #ccc;
+      color: var(--light-secondary);
       margin-bottom: 30px;
+      font-size: 16px;
+      line-height: 1.5;
     }
 
+    /* Botones - Estilos mejorados con efecto neon */
     .btn {
       width: 100%;
-      padding: 16px;
-      margin: 10px 0;
-      font-size: 16px;
+      padding: 18px 24px;
+      margin: 15px 0;
+      font-size: 17px;
+      font-weight: 700;
       border: none;
-      border-radius: 12px;
+      border-radius: var(--radius);
       cursor: pointer;
-      background: #1f1f1f;
-      color: #fff;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      letter-spacing: 1px;
+      box-shadow: var(--shadow);
+      transform: translateY(0);
+      outline: none;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      border: 2px solid var(--neon-purple);
     }
 
     .btn:hover {
-      background: #333;
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-hover), 0 0 15px var(--neon-purple-light);
+      border-color: var(--neon-purple-light);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Efecto neon al hover */
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
     }
 
     .btn-primary {
-      background: #e74c3c;
-      font-weight: bold;
+      background: linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-purple-dark) 100%);
+      color: white;
+      border: 2px solid var(--neon-purple);
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
     }
 
     .btn-primary:hover {
-      background: #c0392b;
+      background: linear-gradient(135deg, var(--neon-purple-light) 0%, var(--neon-purple) 100%);
+      box-shadow: 0 8px 25px rgba(157, 78, 221, 0.4), 0 0 20px var(--neon-purple-light);
     }
 
     .btn-secondary {
-      background: #34495e;
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+      color: white;
+      border: 2px solid var(--secondary);
     }
 
     .btn-secondary:hover {
-      background: #2c3e50;
+      background: linear-gradient(135deg, #7b2cbf 0%, var(--secondary) 100%);
+      box-shadow: 0 8px 25px rgba(90, 24, 154, 0.4), 0 0 15px rgba(123, 44, 191, 0.5);
     }
 
     .btn-success {
-      background: #27ae60;
-      font-weight: bold;
+      background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
+      color: white;
+      border: 2px solid var(--success);
     }
 
     .btn-success:hover {
-      background: #229954;
+      background: linear-gradient(135deg, #4cc700 0%, var(--success) 100%);
+      box-shadow: 0 8px 25px rgba(56, 176, 0, 0.4), 0 0 15px rgba(56, 176, 0, 0.5);
     }
 
+    /* Botón con efecto de pulso neon */
+    .pulse {
+      animation: neonPulse 2s infinite;
+    }
+
+    @keyframes neonPulse {
+      0% {
+        box-shadow: 0 0 5px var(--neon-purple-light);
+      }
+      50% {
+        box-shadow: 0 0 20px var(--neon-purple-light), 0 0 30px var(--neon-purple-light);
+      }
+      100% {
+        box-shadow: 0 0 5px var(--neon-purple-light);
+      }
+    }
+
+    /* Estados */
     .hidden {
-      display: none;
+      display: none !important;
     }
 
-    footer {
-      text-align: center;
-      font-size: 12px;
-      color: #666;
-      margin-top: 40px;
+    .disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      pointer-events: none;
     }
 
-    /* Estilos del formulario */
+    /* Indicador de pasos mejorado con efecto neon */
+    .step-indicator {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 40px;
+      position: relative;
+      gap: 10px;
+    }
+
+    .step-indicator::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      height: 2px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        var(--neon-purple), 
+        var(--neon-purple-light), 
+        var(--neon-purple), 
+        transparent);
+      z-index: 1;
+      box-shadow: 0 0 5px var(--neon-purple-light);
+    }
+
+    .step {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--dark-card);
+      border: 3px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: var(--light-muted);
+      position: relative;
+      z-index: 2;
+      transition: var(--transition);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .step.active {
+      background: linear-gradient(135deg, var(--neon-purple) 0%, var(--neon-purple-dark) 100%);
+      border-color: var(--neon-purple-light);
+      color: white;
+      box-shadow: var(--neon-glow-soft);
+      transform: scale(1.1);
+      animation: stepGlow 2s infinite alternate;
+    }
+
+    @keyframes stepGlow {
+      0% {
+        box-shadow: 0 0 5px var(--neon-purple-light);
+      }
+      100% {
+        box-shadow: 0 0 15px var(--neon-purple-light), 0 0 25px var(--neon-purple-light);
+      }
+    }
+
+    .step.completed {
+      background: linear-gradient(135deg, var(--success) 0%, var(--success-dark) 100%);
+      border-color: var(--success);
+      color: white;
+      box-shadow: 0 0 10px var(--success);
+    }
+
+    /* Formularios con efecto neon */
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+      animation: fadeInUp 0.5s ease-out;
+      position: relative;
     }
 
     label {
       display: block;
-      margin-bottom: 8px;
-      color: #ccc;
+      margin-bottom: 12px;
+      color: var(--neon-purple-light);
+      font-weight: 600;
+      font-size: 16px;
+      text-shadow: 0 0 3px rgba(199, 125, 255, 0.3);
     }
 
     input, select {
       width: 100%;
-      padding: 12px;
+      padding: 16px;
       font-size: 16px;
-      border: 1px solid #333;
-      border-radius: 8px;
-      background: #1f1f1f;
-      color: #fff;
-      box-sizing: border-box;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: rgba(42, 42, 42, 0.8);
+      color: var(--light);
+      transition: var(--transition);
+      font-family: inherit;
+      backdrop-filter: blur(5px);
     }
 
     input:focus, select:focus {
       outline: none;
-      border-color: #e74c3c;
+      border-color: var(--neon-purple-light);
+      box-shadow: 0 0 0 3px rgba(157, 78, 221, 0.3), 0 0 10px var(--neon-purple-light);
+      background: rgba(50, 50, 50, 0.9);
     }
 
+    input:read-only {
+      background: rgba(37, 37, 37, 0.8);
+      cursor: not-allowed;
+      opacity: 0.8;
+      border-color: var(--border);
+    }
+
+    /* Select con icono personalizado y efecto neon */
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c77dff'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 15px center;
+      background-size: 20px;
+      padding-right: 45px;
+      cursor: pointer;
+    }
+
+    select:hover {
+      border-color: var(--neon-purple);
+    }
+
+    /* Recordatorio con borde neon */
     .reminder {
-      background: #2c2c2c;
-      border-left: 4px solid #e74c3c;
-      padding: 15px;
-      margin: 20px 0;
-      border-radius: 0 8px 8px 0;
-      font-size: 14px;
+      background: linear-gradient(135deg, rgba(45, 45, 45, 0.8) 0%, rgba(37, 37, 37, 0.9) 100%);
+      border-left: 5px solid var(--neon-purple);
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.5s ease-out;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 0 10px rgba(157, 78, 221, 0.1);
+    }
+
+    .reminder::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, transparent 30%, rgba(157, 78, 221, 0.1) 100%);
+      pointer-events: none;
     }
 
     .reminder h3 {
       margin-top: 0;
-      color: #e74c3c;
-    }
-
-    .step-indicator {
+      color: var(--neon-purple-light);
+      font-size: 18px;
       display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
+      align-items: center;
+      gap: 10px;
+      text-shadow: 0 0 5px rgba(199, 125, 255, 0.3);
     }
 
-    .step {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: #333;
-      margin: 0 5px;
+    .reminder p {
+      text-align: left;
+      color: var(--light-secondary);
+      margin-bottom: 0;
+      font-size: 14px;
     }
 
-    .step.active {
-      background: #e74c3c;
-    }
-
+    /* Resumen de reserva con efecto neon */
     .summary {
-      background: #1f1f1f;
-      border-radius: 10px;
-      padding: 15px;
-      margin: 20px 0;
+      background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(34, 34, 34, 0.95) 100%);
+      border-radius: var(--radius);
+      padding: 25px;
+      margin: 25px 0;
+      border: 1px solid var(--neon-purple);
+      box-shadow: var(--shadow), 0 0 10px rgba(157, 78, 221, 0.2);
+      animation: fadeInUp 0.5s ease-out;
+      backdrop-filter: blur(5px);
     }
 
     .summary-item {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 8px;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(157, 78, 221, 0.2);
+    }
+
+    .summary-item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
     }
 
     .summary-label {
-      color: #aaa;
+      color: var(--neon-purple-light);
+      font-weight: 500;
+      font-size: 15px;
+      text-shadow: 0 0 3px rgba(199, 125, 255, 0.2);
     }
 
     .summary-value {
-      font-weight: bold;
+      font-weight: 600;
+      color: var(--light);
+      font-size: 16px;
+      text-align: right;
+      max-width: 60%;
+      word-break: break-word;
     }
 
-    .local-info {
-      font-size: 14px;
-      color: #999;
-      margin-top: 5px;
+    /* Vista previa PDF con efecto neon */
+    .pdf-preview {
+      background: linear-gradient(135deg, rgba(30, 30, 30, 0.9) 0%, rgba(34, 34, 34, 0.95) 100%);
+      border-radius: var(--radius);
+      padding: 25px;
+      margin: 25px 0;
+      border: 1px solid var(--neon-purple);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.5s ease-out;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 0 15px rgba(157, 78, 221, 0.2);
+    }
+
+    .pdf-preview::before {
+      content: '📄';
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 40px;
+      opacity: 0.1;
+      transform: rotate(15deg);
+      color: var(--neon-purple-light);
+    }
+
+    .pdf-preview h3 {
+      color: var(--neon-purple-light);
+      margin-top: 0;
       text-align: center;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-shadow: 0 0 5px rgba(199, 125, 255, 0.3);
     }
 
+    .pdf-info {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 14px;
+      color: var(--light-secondary);
+      border: 1px solid rgba(157, 78, 221, 0.2);
+    }
+
+    .pdf-info p {
+      text-align: left;
+      margin-bottom: 10px;
+    }
+
+    .pdf-info p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Animación de carga con efecto neon */
     .loading {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 30px;
+      padding: 60px 30px;
+      text-align: center;
+      animation: fadeInUp 0.5s ease-out;
     }
 
     .spinner {
       border: 4px solid rgba(255, 255, 255, 0.1);
-      border-left-color: #e74c3c;
+      border-left-color: var(--neon-purple-light);
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      width: 60px;
+      height: 60px;
       animation: spin 1s linear infinite;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 0 20px rgba(157, 78, 221, 0.3);
     }
 
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
 
-    .pdf-preview {
-      background: #1f1f1f;
-      border-radius: 10px;
-      padding: 15px;
-      margin: 20px 0;
-      border: 1px solid #333;
+    .loading h3 {
+      color: var(--neon-purple-light);
+      margin-bottom: 15px;
+      font-size: 22px;
+      text-shadow: 0 0 5px rgba(199, 125, 255, 0.3);
     }
 
-    .pdf-preview h3 {
-      color: #e74c3c;
-      margin-top: 0;
+    .loading p {
+      color: var(--light-secondary);
+      max-width: 300px;
+    }
+
+    /* Footer con efecto neon */
+    footer {
       text-align: center;
+      font-size: 14px;
+      color: var(--light-muted);
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid var(--neon-purple);
+      line-height: 1.5;
+      animation: fadeInUp 0.5s ease-out;
+      position: relative;
     }
 
-    .pdf-info {
-      font-size: 14px;
-      color: #ccc;
-      margin-top: 10px;
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--neon-purple-light), transparent);
+      border-radius: 1px;
+      box-shadow: 0 0 5px var(--neon-purple-light);
+    }
+
+    /* Iconos en botones */
+    .btn-icon {
+      font-size: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .btn:hover .btn-icon {
+      transform: scale(1.2);
+    }
+
+    /* Efecto especial para el título del local seleccionado */
+    #local-selected {
+      color: var(--neon-purple-light);
+      font-weight: 700;
+      text-shadow: 0 0 10px var(--neon-purple-light);
+      animation: textGlow 2s infinite alternate;
+      display: inline-block;
+      padding: 5px 10px;
+      background: rgba(157, 78, 221, 0.1);
+      border-radius: 5px;
+      border: 1px solid var(--neon-purple);
+    }
+
+    @keyframes textGlow {
+      0% {
+        text-shadow: 0 0 5px var(--neon-purple-light);
+        box-shadow: 0 0 5px var(--neon-purple-light);
+      }
+      100% {
+        text-shadow: 0 0 15px var(--neon-purple-light), 0 0 25px var(--neon-purple-light);
+        box-shadow: 0 0 10px var(--neon-purple-light);
+      }
+    }
+
+    /* Scrollbar personalizada con colores morados */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--neon-purple), var(--neon-purple-dark));
+      border-radius: 5px;
+      box-shadow: 0 0 5px var(--neon-purple-light);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, var(--neon-purple-light), var(--neon-purple));
+      box-shadow: 0 0 10px var(--neon-purple-light);
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px 15px;
+        margin: 10px;
+        border-width: 1px;
+      }
+      
+      h1 {
+        font-size: 26px;
+      }
+      
+      .btn {
+        padding: 16px 20px;
+        font-size: 16px;
+      }
+      
+      .step {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+      }
+      
+      .summary, .pdf-preview, .reminder {
+        padding: 20px;
+      }
+    }
+
+    /* Animación para elementos que aparecen */
+    .fade-in {
+      animation: fadeInUp 0.5s ease-out;
     }
   </style>
 </head>
@@ -229,28 +686,31 @@
 <div class="container">
 
   <!-- Paso 1 - Tipo de reserva -->
-  <div id="step1">
+  <div id="step1" class="fade-in">
     <div class="step-indicator">
-      <div class="step active"></div>
-      <div class="step"></div>
-      <div class="step"></div>
+      <div class="step active">1</div>
+      <div class="step">2</div>
+      <div class="step">3</div>
     </div>
     
-    <h1>Reservas</h1>
-    <p>¿Qué deseas reservar?</p>
+    <h1>RESERVAS</h1>
+    <p>Selecciona el tipo de reserva que deseas realizar</p>
 
-    <button class="btn btn-primary" onclick="selectTipo('Restaurante')">🍽 Haz Tu Reserva</button>
+    <button class="btn btn-primary pulse" onclick="selectTipo('Restaurante')">
+      <span class="btn-icon">🍽</span>
+      Haz Tu Reserva
+    </button>
   </div>
 
   <!-- Paso 2 - Selección de local -->
   <div id="step2" class="hidden">
     <div class="step-indicator">
-      <div class="step"></div>
-      <div class="step active"></div>
-      <div class="step"></div>
+      <div class="step completed">1</div>
+      <div class="step active">2</div>
+      <div class="step">3</div>
     </div>
     
-    <h1>Selecciona tu local</h1>
+    <h1>SELECCIÓN DE LOCAL</h1>
     <p>Elige uno de nuestros locales disponibles</p>
 
     <div class="form-group">
@@ -270,27 +730,30 @@
       </select>
     </div>
 
-    <button class="btn btn-secondary" onclick="backToStep1()">⬅ Volver</button>
-    <button class="btn btn-primary" onclick="proceedToForm()" id="continue-btn" disabled>Continuar</button>
+    <button class="btn btn-secondary" onclick="backToStep1()">
+      <span class="btn-icon">⬅</span>
+      Volver
+    </button>
+    <button class="btn btn-primary" onclick="proceedToForm()" id="continue-btn" disabled>
+      <span class="btn-icon">→</span>
+      Continuar
+    </button>
   </div>
 
   <!-- Paso 3 - Formulario de reserva -->
   <div id="step3" class="hidden">
     <div class="step-indicator">
-      <div class="step"></div>
-      <div class="step"></div>
-      <div class="step active"></div>
+      <div class="step completed">1</div>
+      <div class="step completed">2</div>
+      <div class="step active">3</div>
     </div>
     
-    <h1>Completa tu reserva</h1>
+    <h1>COMPLETA TU RESERVA</h1>
     <p>Local: <span id="local-selected"></span></p>
 
     <form id="reservation-form">
-      <div class="form-group">
-        <label for="local">Local:</label>
-        <input type="text" id="local" readonly>
-      </div>
-
+      <!-- SE ELIMINÓ EL INPUT DE LOCAL QUE SE REPETÍA -->
+      
       <div class="form-group">
         <label for="date">Fecha:</label>
         <input type="date" id="date" required>
@@ -334,20 +797,26 @@
         <p>Recordar que después de la hora acordada cuenta con 5 minutos de gracia, de no estar se procederá a eliminar la reserva.</p>
       </div>
 
-      <button type="button" class="btn btn-secondary" onclick="backToStep2()">⬅ Volver</button>
-      <button type="submit" class="btn btn-primary">Generar PDF</button>
+      <button type="button" class="btn btn-secondary" onclick="backToStep2()">
+        <span class="btn-icon">⬅</span>
+        Volver
+      </button>
+      <button type="submit" class="btn btn-primary">
+        <span class="btn-icon">📄</span>
+        Generar PDF
+      </button>
     </form>
   </div>
 
   <!-- Paso 4 - Vista previa del PDF -->
   <div id="step4" class="hidden">
     <div class="step-indicator">
-      <div class="step"></div>
-      <div class="step"></div>
-      <div class="step"></div>
+      <div class="step completed">1</div>
+      <div class="step completed">2</div>
+      <div class="step completed">3</div>
     </div>
     
-    <h1>PDF Generado</h1>
+    <h1>PDF GENERADO</h1>
     <p>Revisa tu reserva antes de enviar</p>
 
     <div class="summary" id="reservation-summary">
@@ -370,8 +839,14 @@
       <p>Después de la hora acordada cuenta con 5 minutos de gracia, de no estar se procederá a eliminar la reserva.</p>
     </div>
 
-    <button class="btn btn-secondary" onclick="backToStep3()">⬅ Editar reserva</button>
-    <button class="btn btn-success" onclick="sendPDFToWhatsApp()">📤 Enviar PDF por WhatsApp</button>
+    <button class="btn btn-secondary" onclick="backToStep3()">
+      <span class="btn-icon">✏️</span>
+      Editar reserva
+    </button>
+    <button class="btn btn-success" onclick="sendPDFToWhatsApp()">
+      <span class="btn-icon">📤</span>
+      Enviar PDF por WhatsApp
+    </button>
   </div>
 
   <!-- Paso 5 - Carga y confirmación -->
@@ -412,8 +887,10 @@
     
     if (select.value) {
       continueBtn.disabled = false;
+      continueBtn.classList.remove('disabled');
     } else {
       continueBtn.disabled = true;
+      continueBtn.classList.add('disabled');
     }
   }
 
@@ -456,7 +933,6 @@
     
     // Actualizar el texto en el paso 3
     document.getElementById('local-selected').textContent = localSeleccionado;
-    document.getElementById('local').value = localSeleccionado;
     
     // Mostrar paso 3
     document.getElementById('step2').classList.add('hidden');
@@ -482,6 +958,7 @@
     // Resetear la selección del local
     document.getElementById('local-select').value = '';
     document.getElementById('continue-btn').disabled = true;
+    document.getElementById('continue-btn').classList.add('disabled');
     
     document.getElementById('step2').classList.add('hidden');
     document.getElementById('step1').classList.remove('hidden');
@@ -500,7 +977,7 @@
     // Obtener los datos del formulario
     reservationData = {
       tipo: tipoSeleccionado,
-      local: localSeleccionado,
+      local: localSeleccionado, // Usamos la variable global localSeleccionado
       fecha: document.getElementById('date').value,
       hora: document.getElementById('time').value,
       personas: document.getElementById('people').value,
@@ -539,16 +1016,16 @@
     
     // Configurar el documento
     doc.setFontSize(20);
-    doc.setTextColor(44, 62, 80);
+    doc.setTextColor(157, 78, 221); // Morado neon
     doc.text('CONFIRMACIÓN DE RESERVA', 105, 20, { align: 'center' });
     
     // Logo/Encabezado
     doc.setFontSize(12);
-    doc.setTextColor(52, 73, 94);
+    doc.setTextColor(199, 125, 255); // Morado claro
     doc.text('La Parrillita de Pepe', 105, 30, { align: 'center' });
     
     // Línea separadora
-    doc.setDrawColor(231, 76, 60);
+    doc.setDrawColor(157, 78, 221);
     doc.setLineWidth(0.5);
     doc.line(20, 35, 190, 35);
     
@@ -586,7 +1063,7 @@
       head: [['Detalle', 'Información']],
       body: tableData,
       theme: 'grid',
-      headStyles: { fillColor: [231, 76, 60], textColor: [255, 255, 255] },
+      headStyles: { fillColor: [157, 78, 221], textColor: [255, 255, 255] }, // Morado neon
       styles: { fontSize: 10, cellPadding: 5 },
       columnStyles: { 
         0: { fontStyle: 'bold', cellWidth: 70 },
@@ -600,7 +1077,7 @@
     
     // Recordatorio importante
     doc.setFontSize(10);
-    doc.setTextColor(231, 76, 60);
+    doc.setTextColor(157, 78, 221); // Morado neon
     doc.setFont(undefined, 'bold');
     doc.text('⚠️ RECORDATORIO IMPORTANTE', 20, finalY);
     
@@ -614,6 +1091,7 @@
     doc.setFontSize(8);
     doc.setTextColor(100, 100, 100);
     doc.text('Para consultas o modificaciones contactar al WhatsApp: 50661781454', 105, 280, { align: 'center' });
+    
     // Guardar PDF como blob
     pdfBlob = doc.output('blob');
     
@@ -645,10 +1123,10 @@
     
     // Crear una vista previa simple del PDF
     previewDiv.innerHTML = `
-      <div style="background: white; color: black; padding: 15px; border-radius: 5px; font-family: Arial, sans-serif;">
-        <h4 style="color: #2c3e50; margin-top: 0; text-align: center;">CONFIRMACIÓN DE RESERVA</h4>
-        <p style="color: #e74c3c; text-align: center; font-weight: bold;">La Parrillita de Pepe</p>
-        <hr style="border-color: #e74c3c;">
+      <div style="background: white; color: black; padding: 15px; border-radius: 5px; font-family: Arial, sans-serif; border: 2px solid #9d4edd; box-shadow: 0 0 10px #c77dff;">
+        <h4 style="color: #9d4edd; margin-top: 0; text-align: center; font-weight: bold;">CONFIRMACIÓN DE RESERVA</h4>
+        <p style="color: #c77dff; text-align: center; font-weight: bold; text-shadow: 0 0 5px rgba(199, 125, 255, 0.3);">La Parrillita de Pepe</p>
+        <hr style="border-color: #9d4edd; box-shadow: 0 0 5px #9d4edd;">
         
         <div style="margin-top: 15px;">
           <p><strong>Tipo de Reserva:</strong> ${reservationData.tipo}</p>
@@ -660,9 +1138,9 @@
           <p><strong>Teléfono:</strong> ${reservationData.telefono}</p>
         </div>
         
-        <div style="background: #ffeaa7; padding: 10px; border-left: 3px solid #e74c3c; margin-top: 15px;">
+        <div style="background: #f8f0ff; padding: 10px; border-left: 3px solid #9d4edd; margin-top: 15px; border-radius: 3px;">
           <p style="margin: 0; font-size: 12px;">
-            <strong>⚠️ Recordatorio:</strong> Después de la hora acordada cuenta con 5 minutos de gracia, de no estar se procederá a eliminar la reserva.
+            <strong style="color: #9d4edd;">⚠️ Recordatorio:</strong> Después de la hora acordada cuenta con 5 minutos de gracia, de no estar se procederá a eliminar la reserva.
           </p>
         </div>
         
@@ -715,7 +1193,7 @@
     }
     
     // Crear un mensaje inicial para WhatsApp
-    const mensajeInicial = `Hola 👍\n\n*Resumen:*\n• Local: ${reservationData.local}\n• Fecha: ${reservationData.fecha}\n• Hora: ${reservationData.hora}\n• Personas: ${reservationData.personas}\n• Nombre: ${reservationData.nombre}\n\nPor favor, confirma mi reserva.`;
+    const mensajeInicial = `🥩 *LA PARRILLITA DE PEPE* 🔥\n\n*RESERVA CONFIRMADA*\n\n📋 *Resumen de Reserva:*\n📍 *Local:* ${reservationData.local}\n📅 *Fecha:* ${reservationData.fecha}\n⏰ *Hora:* ${reservationData.hora}\n👥 *Personas:* ${reservationData.personas}\n👤 *Nombre:* ${reservationData.nombre}\n\nPor favor, confirma mi reserva. Adjunto el comprobante PDF.`;
     
     // Enviar primero el mensaje de texto
     const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeInicial)}`;
@@ -731,7 +1209,7 @@
     // Mostrar instrucciones
     setTimeout(() => {
       if (whatsappWindow && !whatsappWindow.closed) {
-        alert('PDF generado con éxito. Por favor:\n1. El PDF se ha descargado a tu dispositivo\n2. En WhatsApp, adjunta el PDF manualmente\n3. Envía el archivo para completar tu reserva\n\nNombre del archivo: ' + pdfFileName);
+        alert('✅ PDF generado con éxito\n\n📱 *Instrucciones para enviar:*\n1. El PDF se ha descargado a tu dispositivo\n2. En WhatsApp, adjunta el PDF manualmente\n3. Envía el archivo para completar tu reserva\n\n📄 *Nombre del archivo:* ' + pdfFileName);
       }
     }, 1000);
   }
