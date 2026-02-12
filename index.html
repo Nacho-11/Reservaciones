@@ -10,7 +10,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 
   <style>
-    /* Variables CSS - Por defecto morado para Los Años Locos */
+    /* Variables CSS - Por defecto MORADO (Los Años Locos) */
     :root {
       --neon-primary: #9d4edd;
       --neon-primary-light: #c77dff;
@@ -63,6 +63,23 @@
       --shadow-hover: 0 8px 20px rgba(255, 215, 0, 0.3);
     }
 
+    /* Variables para tema Los Años Locos (azul) */
+    .theme-anoslocos {
+      --neon-primary: #4361ee;
+      --neon-primary-light: #6c8cff;
+      --neon-primary-dark: #3046b3;
+      --neon-glow-color: #6c8cff;
+      --primary: #4361ee;
+      --primary-dark: #3046b3;
+      --primary-light: #6c8cff;
+      --secondary: #3a0ca3;
+      --secondary-dark: #2a0a7a;
+      --neon-glow: 0 0 10px #4361ee, 0 0 20px #6c8cff, 0 0 30px #4361ee;
+      --neon-glow-soft: 0 0 5px #4361ee, 0 0 10px #6c8cff;
+      --shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
+      --shadow-hover: 0 8px 20px rgba(67, 97, 238, 0.3);
+    }
+
     /* Reset y estilos base */
     * {
       margin: 0;
@@ -83,50 +100,60 @@
       transition: var(--transition);
     }
 
-    /* Logos de fondo - MÁS GRANDES */
+    /* Logos de fondo - MÁS GRANDES Y VISIBLES */
     .logo-fondo {
       position: fixed;
-      width: 600px; /* Aumentado de 380px a 600px */
-      opacity: 0.08; /* Ligeramente más visible */
-      filter: blur(1.5px);
+      width: 650px;
+      opacity: 0.25;
+      filter: blur(1px);
       z-index: 0;
       pointer-events: none;
-      transition: opacity 0.5s ease;
+      transition: all 0.5s ease;
     }
 
-    /* Versión del logo para cuando está activo (más visible) */
+    /* Versión del logo para cuando está activo (aún más visible) */
     .logo-fondo.activo {
-      opacity: 0.15;
-      filter: blur(1px);
+      opacity: 0.4;
+      filter: blur(0.5px);
+    }
+
+    /* Hacer que el logo de Los Años Locos sea más visible y blanco */
+    .logo-fondo.derecha {
+      filter: brightness(1.4) contrast(1.2) blur(1px);
+    }
+
+    .logo-fondo.derecha.activo {
+      filter: brightness(1.6) contrast(1.3) blur(0.5px);
+    }
+
+    /* Logo de Parrillita también más visible */
+    .logo-fondo.izquierda {
+      filter: brightness(1.2) contrast(1.1) blur(1px);
+    }
+
+    .logo-fondo.izquierda.activo {
+      filter: brightness(1.4) contrast(1.2) blur(0.5px);
     }
 
     /* Lado izquierdo */
     .izquierda {
-      left: 60px;
+      left: 40px;
       top: 50%;
       transform: translateY(-50%);
     }
 
     /* Lado derecho */
     .derecha {
-      right: 60px;
+      right: 40px;
       top: 50%;
       transform: translateY(-50%);
-    }
-
-    /* Hacer que el logo de Los Años Locos sea más blanco */
-    .logo-fondo.derecha {
-      filter: brightness(1.2) contrast(1.1) blur(1.5px); /* Más brillante y blanco */
-    }
-
-    .logo-fondo.derecha.activo {
-      filter: brightness(1.4) contrast(1.2) blur(1px); /* Aún más brillante cuando está activo */
     }
 
     /* Ocultar en pantallas pequeñas */
     @media (max-width: 1400px) {
       .logo-fondo {
-        width: 450px; /* Aún grande pero más pequeño que en desktop */
+        width: 500px;
+        opacity: 0.2;
       }
     }
 
@@ -145,7 +172,7 @@
       min-height: 100vh;
       background: rgba(10, 10, 10, 0.85);
       border: 2px solid transparent;
-      border-image: linear-gradient(45deg, var(--neon-primary), var(--neon-secondary), var(--neon-pink, #f72585), var(--neon-primary));
+      border-image: linear-gradient(45deg, var(--neon-primary), var(--neon-secondary), var(--neon-primary), var(--neon-secondary));
       border-image-slice: 1;
       animation: borderGlow 3s infinite alternate;
       box-shadow: var(--neon-glow-soft);
@@ -157,12 +184,12 @@
     @keyframes borderGlow {
       0% {
         box-shadow: var(--neon-glow-soft);
-        border-image-source: linear-gradient(45deg, var(--neon-primary), var(--neon-secondary), var(--neon-pink, #f72585), var(--neon-primary));
+        border-image-source: linear-gradient(45deg, var(--neon-primary), var(--neon-secondary), var(--neon-primary), var(--neon-secondary));
       }
       100% {
         box-shadow: 0 0 15px var(--neon-primary-light),
                     0 0 25px var(--neon-primary-light);
-        border-image-source: linear-gradient(45deg, var(--neon-pink, #f72585), var(--neon-primary), var(--neon-secondary), var(--neon-pink, #f72585));
+        border-image-source: linear-gradient(45deg, var(--neon-secondary), var(--neon-primary), var(--neon-secondary), var(--neon-primary));
       }
     }
 
@@ -750,8 +777,8 @@
 </head>
 <body>
 
-  <!-- LOGOS DE FONDO - MÁS GRANDES -->
-  <img src="img/Logo Parrillita.png" alt="Logo Parrillita" class="logo-fondo izquierda" id="logo-parrillita">
+  <!-- LOGOS DE FONDO - MÁS GRANDES Y VISIBLES -->
+  <img src="img/logo Parrillita.png" alt="Logo Parrillita" class="logo-fondo izquierda" id="logo-parrillita">
   <img src="img/Logo Los Años Locos.png" alt="Logo Los Años Locos" class="logo-fondo derecha" id="logo-anoslocos">
 
   <div class="container">
@@ -949,8 +976,8 @@
       const logoParrillita = document.getElementById('logo-parrillita');
       const logoAnosLocos = document.getElementById('logo-anoslocos');
       
-      // Remover clase de tema anterior
-      body.classList.remove('theme-parrillita');
+      // Remover clases de tema anteriores
+      body.classList.remove('theme-parrillita', 'theme-anoslocos');
       
       // Resetear opacidad de logos
       logoParrillita.classList.remove('activo');
@@ -961,9 +988,22 @@
         body.classList.add('theme-parrillita');
         logoParrillita.classList.add('activo');
       } else if (local && local.toLowerCase().includes('años locos')) {
-        // Tema Los Años Locos (morado - por defecto)
+        // Activar tema Los Años Locos (azul)
+        body.classList.add('theme-anoslocos');
         logoAnosLocos.classList.add('activo');
       }
+    }
+
+    // Hacer los logos más visibles desde el principio
+    function hacerLogosVisibles() {
+      const logoParrillita = document.getElementById('logo-parrillita');
+      const logoAnosLocos = document.getElementById('logo-anoslocos');
+      
+      // Ambos logos visibles desde la primera pantalla
+      logoParrillita.style.opacity = '0.25';
+      logoAnosLocos.style.opacity = '0.25';
+      logoAnosLocos.style.filter = 'brightness(1.4) contrast(1.2) blur(1px)';
+      logoParrillita.style.filter = 'brightness(1.2) contrast(1.1) blur(1px)';
     }
 
     // Paso 1: Seleccionar tipo de reserva
@@ -972,11 +1012,8 @@
       document.getElementById('step1').classList.add('hidden');
       document.getElementById('step2').classList.remove('hidden');
       
-      // Por defecto al inicio, mostrar ambos logos con opacidad base
-      const logoParrillita = document.getElementById('logo-parrillita');
-      const logoAnosLocos = document.getElementById('logo-anoslocos');
-      logoParrillita.classList.remove('activo');
-      logoAnosLocos.classList.remove('activo');
+      // Mantener logos visibles en el paso 2
+      hacerLogosVisibles();
     }
 
     // Actualizar información del local seleccionado
@@ -994,11 +1031,17 @@
         continueBtn.disabled = true;
         continueBtn.classList.add('disabled');
         
-        // Si no hay local seleccionado, resetear opacidad
+        // Si no hay local seleccionado, resetear a MORADO (tema por defecto)
+        const body = document.body;
         const logoParrillita = document.getElementById('logo-parrillita');
         const logoAnosLocos = document.getElementById('logo-anoslocos');
+        
+        body.classList.remove('theme-parrillita', 'theme-anoslocos');
         logoParrillita.classList.remove('activo');
         logoAnosLocos.classList.remove('activo');
+        
+        // Mantener visibilidad base
+        hacerLogosVisibles();
       }
     }
 
@@ -1053,6 +1096,9 @@
       // Configurar hora mínima y máxima
       document.getElementById('time').setAttribute('min', '10:00');
       document.getElementById('time').setAttribute('max', '22:00');
+      
+      // Mantener logos visibles
+      hacerLogosVisibles();
     }
 
     // Paso 3: Volver al paso 2
@@ -1065,6 +1111,8 @@
       if (select.value) {
         cambiarTemaPorLocal(select.value);
       }
+      
+      hacerLogosVisibles();
     }
 
     // Paso 2: Volver al paso 1
@@ -1077,19 +1125,24 @@
       document.getElementById('step2').classList.add('hidden');
       document.getElementById('step1').classList.remove('hidden');
       
-      // Resetear tema a estado neutral
+      // Resetear tema a MORADO (por defecto)
       const body = document.body;
-      body.classList.remove('theme-parrillita');
       const logoParrillita = document.getElementById('logo-parrillita');
       const logoAnosLocos = document.getElementById('logo-anoslocos');
+      
+      body.classList.remove('theme-parrillita', 'theme-anoslocos');
       logoParrillita.classList.remove('activo');
       logoAnosLocos.classList.remove('activo');
+      
+      // Mantener logos visibles en primera pantalla
+      hacerLogosVisibles();
     }
 
     // Paso 4: Volver al paso 3
     function backToStep3() {
       document.getElementById('step4').classList.add('hidden');
       document.getElementById('step3').classList.remove('hidden');
+      hacerLogosVisibles();
     }
 
     // Manejar el envío del formulario
@@ -1138,8 +1191,20 @@
       
       // Configurar el documento - Usar colores según el tema
       const esParrillita = localSeleccionado && localSeleccionado.toLowerCase().includes('parrillita');
-      const colorPrimario = esParrillita ? [255, 215, 0] : [157, 78, 221]; // Amarillo o Morado
-      const colorPrimarioLight = esParrillita ? [255, 228, 77] : [199, 125, 255];
+      const esAnosLocos = localSeleccionado && localSeleccionado.toLowerCase().includes('años locos');
+      
+      let colorPrimario, colorPrimarioLight;
+      
+      if (esParrillita) {
+        colorPrimario = [255, 215, 0]; // Amarillo
+        colorPrimarioLight = [255, 228, 77];
+      } else if (esAnosLocos) {
+        colorPrimario = [67, 97, 238]; // Azul
+        colorPrimarioLight = [108, 140, 255];
+      } else {
+        colorPrimario = [157, 78, 221]; // Morado por defecto
+        colorPrimarioLight = [199, 125, 255];
+      }
       
       doc.setFontSize(20);
       doc.setTextColor(colorPrimario[0], colorPrimario[1], colorPrimario[2]);
@@ -1187,7 +1252,10 @@
         head: [['Detalle', 'Información']],
         body: tableData,
         theme: 'grid',
-        headStyles: { fillColor: [colorPrimario[0], colorPrimario[1], colorPrimario[2]], textColor: esParrillita ? [0, 0, 0] : [255, 255, 255] },
+        headStyles: { 
+          fillColor: [colorPrimario[0], colorPrimario[1], colorPrimario[2]], 
+          textColor: (esParrillita || esAnosLocos) ? [255, 255, 255] : [255, 255, 255]
+        },
         styles: { fontSize: 10, cellPadding: 5 },
         columnStyles: { 
           0: { fontStyle: 'bold', cellWidth: 70 },
@@ -1245,9 +1313,23 @@
     function showPDFPreview() {
       const previewDiv = document.getElementById('pdf-preview-content');
       const esParrillita = reservationData.local && reservationData.local.toLowerCase().includes('parrillita');
-      const colorBorde = esParrillita ? '#ffd700' : '#9d4edd';
-      const colorTexto = esParrillita ? '#ffd700' : '#9d4edd';
-      const colorFondo = esParrillita ? '#fff9e6' : '#f8f0ff';
+      const esAnosLocos = reservationData.local && reservationData.local.toLowerCase().includes('años locos');
+      
+      let colorBorde, colorTexto, colorFondo;
+      
+      if (esParrillita) {
+        colorBorde = '#ffd700'; // Amarillo
+        colorTexto = '#ffd700';
+        colorFondo = '#fff9e6';
+      } else if (esAnosLocos) {
+        colorBorde = '#4361ee'; // Azul
+        colorTexto = '#4361ee';
+        colorFondo = '#e6ecff';
+      } else {
+        colorBorde = '#9d4edd'; // Morado por defecto
+        colorTexto = '#9d4edd';
+        colorFondo = '#f8f0ff';
+      }
       
       previewDiv.innerHTML = `
         <div style="background: white; color: black; padding: 15px; border-radius: 5px; font-family: Arial, sans-serif; border: 2px solid ${colorBorde}; box-shadow: 0 0 10px ${colorBorde};">
@@ -1345,18 +1427,15 @@
       URL.revokeObjectURL(url);
     }
 
-    // Configurar fecha mínima al cargar la página
+    // Configurar fecha mínima al cargar la página y hacer logos visibles
     document.addEventListener('DOMContentLoaded', function() {
       const today = new Date().toISOString().split('T')[0];
       if (document.getElementById('date')) {
         document.getElementById('date').setAttribute('min', today);
       }
       
-      // Inicializar logos sin activo
-      const logoParrillita = document.getElementById('logo-parrillita');
-      const logoAnosLocos = document.getElementById('logo-anoslocos');
-      logoParrillita.classList.remove('activo');
-      logoAnosLocos.classList.remove('activo');
+      // Hacer logos más visibles desde el inicio
+      hacerLogosVisibles();
     });
   </script>
 
