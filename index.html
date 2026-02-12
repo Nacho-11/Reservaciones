@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Reservas | La Parrillita de Pepe</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <!-- Incluir jsPDF desde CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
@@ -749,22 +749,22 @@
         margin: 10px;
         border-width: 1px;
       }
-      
+
       h1 {
         font-size: 26px;
       }
-      
+
       .btn {
         padding: 16px 20px;
         font-size: 16px;
       }
-      
+
       .step {
         width: 40px;
         height: 40px;
         font-size: 16px;
       }
-      
+
       .summary, .pdf-preview, .reminder {
         padding: 20px;
       }
@@ -790,7 +790,7 @@
         <div class="step">2</div>
         <div class="step">3</div>
       </div>
-      
+
       <h1>RESERVAS</h1>
       <p>Selecciona el tipo de reserva que deseas realizar</p>
 
@@ -807,7 +807,7 @@
         <div class="step active">2</div>
         <div class="step">3</div>
       </div>
-      
+
       <h1>SELECCIÓN DE LOCAL</h1>
       <p>Elige uno de nuestros locales disponibles</p>
 
@@ -845,12 +845,12 @@
         <div class="step completed">2</div>
         <div class="step active">3</div>
       </div>
-      
+
       <h1>COMPLETA TU RESERVA</h1>
       <p>Local: <span id="local-selected"></span></p>
 
       <form id="reservation-form">
-        
+
         <div class="form-group">
           <label for="date">Fecha:</label>
           <input type="date" id="date" required>
@@ -912,7 +912,7 @@
         <div class="step completed">2</div>
         <div class="step completed">3</div>
       </div>
-      
+
       <h1>PDF GENERADO</h1>
       <p>Revisa tu reserva antes de enviar</p>
 
@@ -975,14 +975,14 @@
       const body = document.body;
       const logoParrillita = document.getElementById('logo-parrillita');
       const logoAnosLocos = document.getElementById('logo-anoslocos');
-      
+
       // Remover clases de tema anteriores
       body.classList.remove('theme-parrillita', 'theme-anoslocos');
-      
+
       // Resetear opacidad de logos
       logoParrillita.classList.remove('activo');
       logoAnosLocos.classList.remove('activo');
-      
+
       if (local && local.toLowerCase().includes('parrillita')) {
         // Activar tema Parrillita (amarillo)
         body.classList.add('theme-parrillita');
@@ -998,7 +998,7 @@
     function hacerLogosVisibles() {
       const logoParrillita = document.getElementById('logo-parrillita');
       const logoAnosLocos = document.getElementById('logo-anoslocos');
-      
+
       // Ambos logos visibles desde la primera pantalla
       logoParrillita.style.opacity = '0.25';
       logoAnosLocos.style.opacity = '0.25';
@@ -1011,7 +1011,7 @@
       tipoSeleccionado = tipo;
       document.getElementById('step1').classList.add('hidden');
       document.getElementById('step2').classList.remove('hidden');
-      
+
       // Mantener logos visibles en el paso 2
       hacerLogosVisibles();
     }
@@ -1020,26 +1020,26 @@
     function updateLocalInfo() {
       const select = document.getElementById('local-select');
       const continueBtn = document.getElementById('continue-btn');
-      
+
       if (select.value) {
         continueBtn.disabled = false;
         continueBtn.classList.remove('disabled');
-        
+
         // Cambiar tema según el local seleccionado
         cambiarTemaPorLocal(select.value);
       } else {
         continueBtn.disabled = true;
         continueBtn.classList.add('disabled');
-        
+
         // Si no hay local seleccionado, resetear a MORADO (tema por defecto)
         const body = document.body;
         const logoParrillita = document.getElementById('logo-parrillita');
         const logoAnosLocos = document.getElementById('logo-anoslocos');
-        
+
         body.classList.remove('theme-parrillita', 'theme-anoslocos');
         logoParrillita.classList.remove('activo');
         logoAnosLocos.classList.remove('activo');
-        
+
         // Mantener visibilidad base
         hacerLogosVisibles();
       }
@@ -1074,29 +1074,29 @@
     // Proceder al formulario después de seleccionar local
     function proceedToForm() {
       const select = document.getElementById('local-select');
-      
+
       if (!select.value) {
         alert('Por favor, selecciona un local.');
         return;
       }
-      
+
       localSeleccionado = select.value;
-      
+
       // Actualizar el texto en el paso 3
       document.getElementById('local-selected').textContent = localSeleccionado;
-      
+
       // Mostrar paso 3
       document.getElementById('step2').classList.add('hidden');
       document.getElementById('step3').classList.remove('hidden');
-      
+
       // Configurar fecha mínima como hoy
       const today = new Date().toISOString().split('T')[0];
       document.getElementById('date').setAttribute('min', today);
-      
+
       // Configurar hora mínima y máxima
       document.getElementById('time').setAttribute('min', '10:00');
       document.getElementById('time').setAttribute('max', '22:00');
-      
+
       // Mantener logos visibles
       hacerLogosVisibles();
     }
@@ -1105,13 +1105,13 @@
     function backToStep2() {
       document.getElementById('step3').classList.add('hidden');
       document.getElementById('step2').classList.remove('hidden');
-      
+
       // Al volver, mantener el tema según el local seleccionado
       const select = document.getElementById('local-select');
       if (select.value) {
         cambiarTemaPorLocal(select.value);
       }
-      
+
       hacerLogosVisibles();
     }
 
@@ -1121,19 +1121,19 @@
       document.getElementById('local-select').value = '';
       document.getElementById('continue-btn').disabled = true;
       document.getElementById('continue-btn').classList.add('disabled');
-      
+
       document.getElementById('step2').classList.add('hidden');
       document.getElementById('step1').classList.remove('hidden');
-      
+
       // Resetear tema a MORADO (por defecto)
       const body = document.body;
       const logoParrillita = document.getElementById('logo-parrillita');
       const logoAnosLocos = document.getElementById('logo-anoslocos');
-      
+
       body.classList.remove('theme-parrillita', 'theme-anoslocos');
       logoParrillita.classList.remove('activo');
       logoAnosLocos.classList.remove('activo');
-      
+
       // Mantener logos visibles en primera pantalla
       hacerLogosVisibles();
     }
@@ -1145,10 +1145,33 @@
       hacerLogosVisibles();
     }
 
+    // Función para formatear fecha SIN desfase de zona horaria
+    function formatearFechaCompleta(fechaISO) {
+      const fechaParts = reservationData.fecha.split('-');
+      const meses = [
+        'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+        'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+      ];
+      const dias = [
+        'domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'
+      ];
+
+      const año = parseInt(fechaParts[0]);
+      const mes = parseInt(fechaParts[1]) - 1;
+      const dia = parseInt(fechaParts[2]);
+
+      // Usar UTC para evitar desfase
+      const fechaObj = new Date(Date.UTC(año, mes, dia));
+      const diaSemana = dias[fechaObj.getUTCDay()];
+      const nombreMes = meses[mes];
+
+      return `${diaSemana}, ${dia} de ${nombreMes} de ${año}`;
+    }
+
     // Manejar el envío del formulario
     document.getElementById('reservation-form').addEventListener('submit', function(event) {
       event.preventDefault();
-      
+
       // Obtener los datos del formulario
       reservationData = {
         tipo: tipoSeleccionado,
@@ -1160,7 +1183,7 @@
         telefono: document.getElementById('phone').value,
         fechaCreacion: new Date().toLocaleString('es-ES')
       };
-      
+
       // Validar que todos los campos estén completos
       for (let key in reservationData) {
         if (!reservationData[key] && key !== 'fechaCreacion') {
@@ -1168,11 +1191,11 @@
           return;
         }
       }
-      
+
       // Mostrar paso de carga
       document.getElementById('step3').classList.add('hidden');
       document.getElementById('step5').classList.remove('hidden');
-      
+
       // Generar PDF después de un pequeño delay para mostrar la animación
       setTimeout(() => {
         generatePDF();
@@ -1183,18 +1206,18 @@
     function generatePDF() {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
-      
+
       // Configurar nombre del archivo
       const nombreSinEspacios = reservationData.nombre.replace(/\s+/g, '_');
       const telefonoLimpio = reservationData.telefono.replace(/\s+/g, '');
       pdfFileName = `${nombreSinEspacios}_${telefonoLimpio}.pdf`;
-      
+
       // Configurar el documento - Usar colores según el tema
       const esParrillita = localSeleccionado && localSeleccionado.toLowerCase().includes('parrillita');
       const esAnosLocos = localSeleccionado && localSeleccionado.toLowerCase().includes('años locos');
-      
+
       let colorPrimario, colorPrimarioLight;
-      
+
       if (esParrillita) {
         colorPrimario = [255, 215, 0]; // Amarillo
         colorPrimarioLight = [255, 228, 77];
@@ -1205,34 +1228,28 @@
         colorPrimario = [157, 78, 221]; // Morado por defecto
         colorPrimarioLight = [199, 125, 255];
       }
-      
+
       doc.setFontSize(20);
       doc.setTextColor(colorPrimario[0], colorPrimario[1], colorPrimario[2]);
       doc.text('CONFIRMACIÓN DE RESERVA', 105, 20, { align: 'center' });
-      
+
       // Logo/Encabezado
       doc.setFontSize(12);
       doc.setTextColor(colorPrimarioLight[0], colorPrimarioLight[1], colorPrimarioLight[2]);
       doc.text('La Parrillita de Pepe', 105, 30, { align: 'center' });
-      
+
       // Línea separadora
       doc.setDrawColor(colorPrimario[0], colorPrimario[1], colorPrimario[2]);
       doc.setLineWidth(0.5);
       doc.line(20, 35, 190, 35);
-      
+
       // Información de la reserva
       doc.setFontSize(11);
       doc.setTextColor(0, 0, 0);
-      
-      // Formatear fecha para mostrar
-      const fecha = new Date(reservationData.fecha);
-      const fechaFormateada = fecha.toLocaleDateString('es-ES', { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-      });
-      
+
+      // Formatear fecha para mostrar - VERSIÓN CORREGIDA
+      const fechaFormateada = formatearFechaCompleta(reservationData.fecha);
+
       // Tabla de información
       const tableData = [
         ['Tipo de Reserva', reservationData.tipo],
@@ -1245,7 +1262,7 @@
         ['Fecha de Creación', reservationData.fechaCreacion],
         ['Número de Referencia', generarNumeroReferencia()]
       ];
-      
+
       // Usar autoTable para una tabla más profesional
       doc.autoTable({
         startY: 50,
@@ -1254,7 +1271,7 @@
         theme: 'grid',
         headStyles: { 
           fillColor: [colorPrimario[0], colorPrimario[1], colorPrimario[2]], 
-          textColor: (esParrillita || esAnosLocos) ? [255, 255, 255] : [255, 255, 255]
+          textColor: [255, 255, 255]
         },
         styles: { fontSize: 10, cellPadding: 5 },
         columnStyles: { 
@@ -1263,39 +1280,39 @@
         },
         margin: { left: 20, right: 20 }
       });
-      
+
       // Obtener la posición Y después de la tabla
       const finalY = doc.lastAutoTable.finalY + 15;
-      
+
       // Recordatorio importante
       doc.setFontSize(10);
       doc.setTextColor(colorPrimario[0], colorPrimario[1], colorPrimario[2]);
       doc.setFont(undefined, 'bold');
       doc.text('⚠️ RECORDATORIO IMPORTANTE', 20, finalY);
-      
+
       doc.setFontSize(9);
       doc.setTextColor(0, 0, 0);
       doc.setFont(undefined, 'normal');
       const reminderText = 'Después de la hora acordada cuenta con 5 minutos de gracia, de no estar se procederá a eliminar la reserva.';
       doc.text(reminderText, 20, finalY + 8, { maxWidth: 170 });
-      
+
       // Información de contacto
       doc.setFontSize(8);
       doc.setTextColor(100, 100, 100);
       doc.text('Para consultas o modificaciones contactar al WhatsApp: 50661781454', 105, 280, { align: 'center' });
-      
+
       // Guardar PDF como blob
       pdfBlob = doc.output('blob');
-      
+
       // Mostrar resumen en el paso 4
       showReservationSummary();
-      
+
       // Mostrar vista previa del PDF
       showPDFPreview();
-      
+
       // Mostrar nombre del archivo
       document.getElementById('pdf-filename').textContent = pdfFileName;
-      
+
       // Ir al paso 4
       document.getElementById('step5').classList.add('hidden');
       document.getElementById('step4').classList.remove('hidden');
@@ -1314,9 +1331,9 @@
       const previewDiv = document.getElementById('pdf-preview-content');
       const esParrillita = reservationData.local && reservationData.local.toLowerCase().includes('parrillita');
       const esAnosLocos = reservationData.local && reservationData.local.toLowerCase().includes('años locos');
-      
+
       let colorBorde, colorTexto, colorFondo;
-      
+
       if (esParrillita) {
         colorBorde = '#ffd700'; // Amarillo
         colorTexto = '#ffd700';
@@ -1330,7 +1347,7 @@
         colorTexto = '#9d4edd';
         colorFondo = '#f8f0ff';
       }
-      
+
       previewDiv.innerHTML = `
         <div style="background: white; color: black; padding: 15px; border-radius: 5px; font-family: Arial, sans-serif; border: 2px solid ${colorBorde}; box-shadow: 0 0 10px ${colorBorde};">
           <h4 style="color: ${colorTexto}; margin-top: 0; text-align: center; font-weight: bold;">CONFIRMACIÓN DE RESERVA</h4>
@@ -1360,15 +1377,13 @@
       `;
     }
 
-    // Mostrar resumen de la reserva
+    // Mostrar resumen de la reserva - VERSIÓN CORREGIDA
     function showReservationSummary() {
       const summaryDiv = document.getElementById('reservation-summary');
-      
-      // Formatear fecha para mostrar
-      const fecha = new Date(reservationData.fecha);
-      const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      const fechaFormateada = fecha.toLocaleDateString('es-ES', opcionesFecha);
-      
+
+      // Usar la misma función de formateo
+      const fechaFormateada = formatearFechaCompleta(reservationData.fecha);
+
       summaryDiv.innerHTML = `
         <div class="summary-item">
           <span class="summary-label">Local:</span>
@@ -1393,21 +1408,25 @@
       `;
     }
 
-    // Enviar PDF por WhatsApp
+    // Enviar PDF por WhatsApp - VERSIÓN CORREGIDA
     function sendPDFToWhatsApp() {
       if (!pdfBlob) {
         alert('Error: No se ha generado el PDF. Por favor, intenta nuevamente.');
         return;
       }
-      
-      const mensajeInicial = `🥩 *LA PARRILLITA DE PEPE* 🔥\n\n*RESERVA CONFIRMADA*\n\n📋 *Resumen de Reserva:*\n📍 *Local:* ${reservationData.local}\n📅 *Fecha:* ${reservationData.fecha}\n⏰ *Hora:* ${reservationData.hora}\n👥 *Personas:* ${reservationData.personas}${reservationData.personas === '11' ? ' (Más de 10)' : ''}\n👤 *Nombre:* ${reservationData.nombre}\n\nPor favor, confirma mi reserva. Adjunto el comprobante PDF.`;
-      
+
+      // Formatear fecha DD/MM/YYYY para WhatsApp
+      const fechaParts = reservationData.fecha.split('-');
+      const fechaFormateada = `${fechaParts[2]}/${fechaParts[1]}/${fechaParts[0]}`;
+
+      const mensajeInicial = `🥩 *LA PARRILLITA DE PEPE* 🔥\n\n*RESERVA CONFIRMADA*\n\n📋 *Resumen de Reserva:*\n📍 *Local:* ${reservationData.local}\n📅 *Fecha:* ${fechaFormateada}\n⏰ *Hora:* ${reservationData.hora}\n👥 *Personas:* ${reservationData.personas}${reservationData.personas === '11' ? ' (Más de 10)' : ''}\n👤 *Nombre:* ${reservationData.nombre}\n\nPor favor, confirma mi reserva. Adjunto el comprobante PDF.`;
+
       const urlWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensajeInicial)}`;
-      
+
       const whatsappWindow = window.open(urlWhatsApp, '_blank');
-      
+
       downloadPDF();
-      
+
       setTimeout(() => {
         if (whatsappWindow && !whatsappWindow.closed) {
           alert('✅ PDF generado con éxito\n\n📱 *Instrucciones para enviar:*\n1. El PDF se ha descargado a tu dispositivo\n2. En WhatsApp, adjunta el PDF manualmente\n3. Envía el archivo para completar tu reserva\n\n📄 *Nombre del archivo:* ' + pdfFileName);
@@ -1433,7 +1452,7 @@
       if (document.getElementById('date')) {
         document.getElementById('date').setAttribute('min', today);
       }
-      
+
       // Hacer logos más visibles desde el inicio
       hacerLogosVisibles();
     });
